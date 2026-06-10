@@ -28,44 +28,38 @@ Legend: ☐ not started · ◐ in progress · ☑ done (orchestrator-reviewed)
   prompt-type Stop hooks, FileChanged, arguments frontmatter,
   disable-model-invocation, 1M context, 4×/15× multipliers, pricing/free window,
   Opus 4.8 classifier fallback) — all confirmed. No fixes needed; PASS.
-- ☐ NEW (from Carlo, this session): add
-  docs/wiki/03-author-workflows/adopting-and-sharing-tools.md in Wave 3 —
-  intake → cleanup → re-architect method for adopting shared author tools
-  (three-layer model: engine/conventions/personal; PROFILE.md extraction;
-  ADAPTING.md self-onboarding prompt; delta log; scrub-before-reshare).
-  Content drafted in conversation 2026-06-10 — see session handoff in
-  workspace-agents/handoffs/ if context lost.
-- ☐ NEW: add a usage/cost-management page or section (Carlo hit session limits
-  mid-wave; wiki should teach mitigation: cheaper models for subagents,
-  /usage, /clear, /compact, batch sizing, model-per-agent).
-- ☐ NEW (from Carlo's ideas-01.md, logged 2026-06-10): four topics for Wave 3 —
-  1. **One-folder end-to-end project**: quick-start.md should establish ONE
-     canonical book-project folder layout and show how each workflow doc's
-     structure (drafting's bible/, publishing's output/, marketing/, research/,
-     world/) slots into it as subfolders. Today each deep dive shows its own
-     separate layout; nothing unifies them.
-  2. **Authors building custom tools/apps** (vibecoding: Electron apps, web
-     components, author utilities): essentially uncovered (only a one-line
-     `mcpb` mention in mcp.md). Fold into the planned
-     adopting-and-sharing-tools.md → retitle scope to "building, adopting, and
-     sharing author tools."
-  3. **Audio & image generation via third-party APIs** (ElevenLabs narration,
-     Midjourney/Ideogram covers): zero current coverage. Add a new use-case-
-     catalog category (Multimedia) + a short section in publishing-ops or
-     marketing Advanced. Honesty flags required: Midjourney has no official
-     API (⚠️ workaround-only, like the Vellum rows); ElevenLabs does.
-  4. **API observability/cost management**: managing-usage-and-cost.md covers
-     plan usage + `/cost` only. Add an "Advanced: API users" section (Console
-     usage dashboards, Claude Code OpenTelemetry support, per-key tracking) —
-     verify against official docs during the Wave 3 ⚠️-claims sweep already
-     scheduled for that page.
+- ☑ All NEW items (Carlo's session requests + ideas-01.md topics 1–4) delivered
+  in Wave 3 below: adopting-and-sharing-tools.md, usage/cost page in learning
+  path, one-folder layout, building-tools coverage, Multimedia category,
+  API observability section.
 
-## Wave 3 — Starter-kit assembly
-- ☐ quick-start.md
-- ☐ glossary.md
-- ☐ wiki/README.md (home + learning path)
-- ☐ Final QA sweep (links, terminology; verify ⚠️ claims in managing-usage-and-cost.md)
-- ☐ Final commit
+## Wave 3 — Starter-kit assembly — COMPLETE 2026-06-10
+- ☑ quick-start.md (264 lines; canonical one-folder layout unifying all four workflow
+  trees — `manuscript/` canonical, drafting's `chapters/` noted as alias; no ⚠️ flags)
+- ☑ adopting-and-sharing-tools.md (340 lines; three-phase adoption method + PROFILE/
+  ADAPTING/CUSTOMIZATIONS conventions + scrub pass + prompt→skill→script→MCP→app
+  decision ladder; platform claims verified vs official skills/MCP docs)
+- ☑ Multimedia: catalog category 10 (9 rows) + publishing-ops narration subsection +
+  marketing imagery subsection. ElevenLabs/Ideogram/OpenAI/Gemini APIs verified
+  official; Midjourney ⚠️ workaround-only (no confirmable official API, docs 403'd).
+- ☑ managing-usage-and-cost.md: "Advanced: API users" added (Console dashboards,
+  OTel env vars + metrics, Admin Usage/Cost API per-key tracking). All three legacy
+  ⚠️ claims resolved: history-resend CONFIRMED (+ prompt-caching nuance), /cost FIXED
+  (alias of /usage, local estimate), effort-cost CONFIRMED (+ thinking can't be
+  disabled on Fable 5). Zero unverified claims remain in the doc.
+- ☑ glossary.md (642 lines, 108 entries, A–Z; orchestrator-read in full)
+- ☑ wiki/README.md (orchestrator-written: 5-stage learning path with usage/cost at
+  step 3, map of contents, how-it-was-built note)
+- ☑ Final QA sweep: scripted link check 0 broken (code blocks excluded); all 6 new/
+  edited outputs orchestrator-read in full; root README updated (new pages linked,
+  "in progress" labels removed); tools page linked from catalog + both READMEs.
+  Glossary sweep found 2 real inconsistencies, both fixed: catalog's stale "no EPUB
+  tooling documented" ⚠️ row (publishing-ops documents pandoc/EPUBCheck — row
+  de-flagged and pointed there) and which-tool-when's overstated "skills carry over"
+  bullet (corrected: Code tab + CLI share, chat surfaces keep separate copies).
+  Orchestrator fixes during QA: skills.md example link rendered as live broken link
+  (backticked); publishing-ops narration section `chapters/` → `manuscript/`.
+- ☑ Final commit + push
 
 ## Out-of-wave additions
 - ☑ 00-start-here/managing-usage-and-cost.md (token discipline for authors) — written
@@ -86,4 +80,9 @@ Legend: ☐ not started · ◐ in progress · ☑ done (orchestrator-reviewed)
   subagent reports ≤1 page, no raw dumps; sessions end at wave boundaries with handoffs.
 - 2026-06-10: Wave 2 QA session. All 5 docs PASS (full reads, scripted link check,
   spot-checks vs Wave 1 docs replacing the lost W2-A/B/D reports). Wave 2 complete.
-  Next: Wave 3 (includes the two NEW items above).
+- 2026-06-10: Wave 3 session. 5 subagents (quick-start, tools, multimedia,
+  API-observability, glossary) + orchestrator-written wiki/README.md + root README
+  refresh. All outputs orchestrator-read; 4 inconsistencies/breaks found and fixed
+  in QA; 0 broken links; all ideas-01.md topics and legacy ⚠️ flags resolved.
+  **PROJECT COMPLETE** — wiki is 20 files / 5 sections, all claims verified or
+  flagged as of 2026-06-10.

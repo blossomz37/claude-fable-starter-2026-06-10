@@ -196,7 +196,7 @@ chapter-audit/
 ```
 
 Reference supporting files *from* `SKILL.md` ("For the full checklist, see
-[checklist.md](checklist.md)") and keep references one level deep — Claude may
+`[checklist.md](checklist.md)`") and keep references one level deep — Claude may
 only preview deeply nested files. Three loading levels: frontmatter metadata
 (~100 tokens, always loaded), `SKILL.md` body (loads on trigger), bundled files
 (load or execute only as needed).

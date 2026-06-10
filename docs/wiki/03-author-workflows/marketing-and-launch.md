@@ -336,6 +336,22 @@ connect read/draft capabilities freely, and leave the send/publish action in
 human hands, enforced by [permissions](../01-claude-code-basics/settings-and-permissions.md)
 (deny or always-ask on any send-class tool).
 
+### Cover concepts and ad imagery via image APIs
+
+Claude doesn't draw, but it can drive image APIs the way it drives the marketing
+pipeline: prompt-craft from the marketing bible, batch generation, file naming per
+platform, and a contact sheet for your judgment pass. Two verified entry points:
+the **Ideogram API** (its documented strength is legible text *inside* images —
+titles and taglines on ad cards; it also publishes a hosted MCP server, so you can
+connect it like any [MCP](../02-power-features/mcp.md) and skip scripting entirely)
+and the **OpenAI Images API** (gpt-image models, generation plus edits) for
+character art and scene imagery. Both bill separately from Claude, per image.
+⚠️ Midjourney has no broadly available official public API — Discord/web only, and
+unofficial proxy APIs risk your account — so treat Midjourney jobs as manual with
+Claude doing the prompt-writing. These are *concept and ad* images; a retail cover
+still goes through a human designer or your own typography pass. Full row list:
+[use-case-catalog.md → Multimedia](../04-reference/use-case-catalog.md#10-multimedia-audio--image-generation).
+
 ## Sources
 
 - Repo wiki docs cross-referenced: `skills.md`, `subagents-and-orchestration.md`,
@@ -345,6 +361,13 @@ human hands, enforced by [permissions](../01-claude-code-basics/settings-and-per
   https://kdp.amazon.com/en_US/help/topic/G200672390 (accessed 2026-06-10).
 - Carlo's `ezpz-m0`–`ezpz-m12` skill suite (installed locally) — used as the
   worked example of a modular marketing pipeline.
+- https://developer.ideogram.ai/ — official Ideogram API docs: generation, remix,
+  text rendering, hosted MCP server (accessed 2026-06-10).
+- https://developers.openai.com/api/docs/guides/image-generation — official OpenAI
+  Images API guide: gpt-image models, generation and edits (accessed 2026-06-10).
+- ⚠️ Midjourney: no official public API confirmed as of 2026-06-10 — its official
+  docs site returned HTTP 403 to our fetch; web search corroborates Discord/web-only
+  access, with unconfirmed third-party claims of a restricted enterprise API.
 - ⚠️ By design, this doc avoids platform-specific numbers (ad character limits,
   image specs, pricing) because they change frequently; readers are directed to
   current platform help pages. No such numbers are asserted here.

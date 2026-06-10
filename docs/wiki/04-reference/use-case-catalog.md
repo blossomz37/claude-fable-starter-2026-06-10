@@ -152,15 +152,16 @@ door ([settings-and-permissions.md](../01-claude-code-basics/settings-and-permis
 | ARC reviewer tracker: real .xlsx with working formulas that flag overdue follow-ups | Cowork | prompt | Starter |
 | PDF proof QA: render the PDF to images and visually verify layout before upload | CLI | skill | Power |
 | Backlist re-formatting batch dispatched as a background session you monitor from one screen | CLI | subagent (background session) | Power |
-| ⚠️ EPUB generation/validation directly in Claude (no EPUB tooling is documented in this wiki's feature docs; route via .docx → Vellum/Calibre, or script `pandoc`/`epubcheck` yourself) | CLI | prompt (scripted) | Power |
+| EPUB generation/validation by driving external tools: Claude scripts `pandoc` (build) and `EPUBCheck` (validate) via shell — the full worked route is in [publishing-ops.md](../03-author-workflows/publishing-ops.md) | CLI | prompt (scripted) | Power |
 | ⚠️ Vellum-specific automation (Vellum has no documented API/MCP; file-level workarounds only) | CLI | skill | Power |
 
 **Standouts and gotchas.** Cowork is the publishing-ops hero for non-terminal
 authors: real deliverables — formatted Word docs, working spreadsheets, organized
 folders — saved straight to disk. Always point it at a *copy* until you trust a
-workflow, and keep "Ask before acting" on. The two ⚠️ rows are honest gaps: EPUB and
-Vellum jobs work today only by driving external tools through shell commands, which
-is Power-user territory. Deep dive: [publishing-ops.md](../03-author-workflows/publishing-ops.md).
+workflow, and keep "Ask before acting" on. EPUB and Vellum jobs work by driving
+external tools through shell commands — Power-user territory; EPUB has a verified
+pandoc/EPUBCheck route, while the ⚠️ Vellum row remains workaround-only. Deep dive:
+[publishing-ops.md](../03-author-workflows/publishing-ops.md).
 
 ## 6. Marketing & Launch
 
@@ -256,7 +257,35 @@ an identical, working setup on day one (Claude Code prompts them once to approve
 repo's servers and skills — by design). If you teach AI-assisted authoring, the
 skill → plugin path turns your curriculum into something students install rather
 than transcribe. Remind students that skills from unknown sources should be audited
-like any software ([skills.md](../02-power-features/skills.md)).
+like any software ([skills.md](../02-power-features/skills.md)). For the full method
+of making a tool portable before you share it — and adopting someone else's safely —
+see the deep dive:
+[adopting-and-sharing-tools.md](../03-author-workflows/adopting-and-sharing-tools.md).
+
+## 10. Multimedia: Audio & Image Generation
+
+| Use case | Best surface | Best mechanism | Difficulty |
+|---|---|---|---|
+| Audiobook narration drafts: a script walks chapter files through the ElevenLabs text-to-speech API, one audio file per chapter | CLI | skill | Power |
+| Narrator auditions: the same dialogue-heavy page rendered in several ElevenLabs voices before you commit to one | CLI | prompt (scripted) | Intermediate |
+| Book-trailer audio bed: ambience via the ElevenLabs sound-effects API, score via its music API | CLI | prompt (scripted) | Power |
+| Cover-concept and ad imagery via the Ideogram API — its documented strength is legible text *in* images (titles, taglines on ad cards) | CLI | skill | Intermediate |
+| Ideogram without scripting: connect Ideogram's hosted MCP server and generate / remix / upscale by asking | CLI | MCP | Intermediate |
+| Character art and scene illustrations via the OpenAI Images API (gpt-image models: generate and edit) | CLI | prompt (scripted) | Intermediate |
+| Social-video teasers: short clips via Google's Veo (Gemini API) plus narration via Gemini text-to-speech, stitched by a script | CLI | skill | Power |
+| Batch ad-image variants: one skill renders N hooks × M aspect ratios, files named per platform | CLI | skill | Power |
+| ⚠️ Midjourney automation (Midjourney has no broadly available official API — Discord/web only; browser-driven workarounds are fragile and unofficial proxy APIs risk your account) | CLI | skill | Power |
+
+**Standouts and gotchas.** Claude never generates the audio or images itself here —
+it writes and runs the scripts that call third-party APIs, then organizes, renames,
+and QA-lists the output. Every provider needs its own account and API key and **bills
+separately from Claude**; long-form narration in particular is metered by the
+character, so price a full novel before committing. Ideogram's hosted MCP server is
+the lowest-friction entry (no script at all). The judgment stays human: listen to
+narration drafts end-to-end, check covers at thumbnail size, and check your audiobook
+retailer's *current* policy on AI narration before producing. Deep dives:
+[publishing-ops.md](../03-author-workflows/publishing-ops.md) (narration) and
+[marketing-and-launch.md](../03-author-workflows/marketing-and-launch.md) (imagery).
 
 ---
 
@@ -312,6 +341,25 @@ citations), all accessed 2026-06-10:
   /add-dir, /fork-adjacent commands
 - [fable-5-model-guide.md](../../fable-documentation/fable-5-model-guide.md) —
   1M context, vision, long-horizon work, classifier fallback, 30-day retention
-- ⚠️ Unverified items are marked inline: EPUB generation/validation tooling and
-  Vellum automation have no documented support in the feature docs above; both rows
-  describe shell-scripted workarounds, not built-in capabilities.
+- ⚠️ Unverified items are marked inline: Vellum automation has no documented
+  API/MCP support; its row describes file-level workarounds, not a built-in
+  capability. (The EPUB row's pandoc/EPUBCheck route is verified against pandoc's
+  official docs in [publishing-ops.md](../03-author-workflows/publishing-ops.md).)
+
+The Multimedia category was additionally verified against the providers' official
+documentation, all accessed 2026-06-10:
+
+- https://elevenlabs.io/docs — official ElevenLabs API: text-to-speech, speech-to-text,
+  sound effects, music
+- https://developer.ideogram.ai/ — official Ideogram API: generation, remix, edit,
+  upscale/reframe, text rendering, plus a hosted MCP server
+  (`https://developer.ideogram.ai/_mcp/server`)
+- https://developers.openai.com/api/docs/guides/image-generation — official OpenAI
+  Images API (gpt-image models; generation and edits; org verification required)
+- https://ai.google.dev/gemini-api/docs — official Gemini API: image generation,
+  Veo video generation, text-to-speech
+- ⚠️ Midjourney: no broadly available official public API as of 2026-06-10. Its
+  official docs site (docs.midjourney.com) refused our fetch (HTTP 403); web-search
+  corroboration found Discord/web access only, with third-party (unofficial) claims
+  of a restricted enterprise-only API we could not confirm from Midjourney itself.
+  The Midjourney row is therefore workaround-only, same treatment as the Vellum rows.

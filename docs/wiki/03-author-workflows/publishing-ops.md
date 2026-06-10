@@ -361,6 +361,22 @@ inconsistently, and your attention is spent only where attention matters.
   deliverable is itself an Office file (ISBN `.xlsx`, a styled submission `.docx`).
   Same skills and CLAUDE.md apply in the Desktop Code tab.
 
+### Audiobook narration drafts via the ElevenLabs API
+
+Claude can't speak, but it can run the pipeline around a text-to-speech service.
+ElevenLabs has a real, official API (text-to-speech, plus sound effects and music),
+so a `narrate-chapter` skill is the same shape as the EPUB pipeline above: a script
+reads `manuscript/ch-NN.md`, strips formatting, splits at scene breaks, sends each
+piece to the API, and writes `audio/ch-NN.mp3` — with Claude handling the
+pre-processing judgment calls (expanding abbreviations, marking pronunciations,
+flagging dialogue-heavy passages to re-listen to). Three cautions: the API is
+**billed per character**, so price one chapter before a whole novel; keep your API
+key in an environment variable, never in the skill file; and check your audiobook
+retailer's current policy on AI narration before producing — this makes *drafts and
+proofs*, the publish decision is yours. More multimedia rows (narrator auditions,
+trailer audio):
+[use-case-catalog.md → Multimedia](../04-reference/use-case-catalog.md#10-multimedia-audio--image-generation).
+
 ## Sources
 
 - https://pandoc.org/epub.html — official pandoc EPUB guide: command syntax,
@@ -372,6 +388,8 @@ inconsistently, and your attention is spent only where attention matters.
 - https://kdp.amazon.com/en_US/help/topic/G201953020 — KDP "Create a Paperback
   Cover": spine width formula, spine-text clearance (accessed 2026-06-10, via search
   summary)
+- https://elevenlabs.io/docs — official ElevenLabs API docs: text-to-speech,
+  sound effects, music APIs (accessed 2026-06-10)
 - https://github.com/anthropics/skills — Anthropic's document skills
   (docx/pdf/xlsx/pptx) referenced via [skills.md](../02-power-features/skills.md)
   (accessed 2026-06-10)

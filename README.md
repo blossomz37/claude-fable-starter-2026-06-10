@@ -14,19 +14,25 @@ Claude Fable 5 launched on June 9, 2026 — Anthropic's most capable generally a
 | If you are… | Read this first |
 |---|---|
 | Brand new to all of this | [Which Claude should I open?](docs/wiki/00-start-here/which-tool-when.md) — the four Claude surfaces and which fits each author job |
+| Wanting a first win today | [Quick start](docs/wiki/00-start-here/quick-start.md) — your first 30 minutes, plus the one-folder book-project layout the whole wiki builds on |
 | Ready to install | [Installation & setup](docs/wiki/01-claude-code-basics/installation-setup.md) — terminal basics included, no experience assumed |
 | Wondering what Fable 5 actually is | [The Fable 5 model guide](docs/fable-documentation/fable-5-model-guide.md) — capabilities, pricing, the June 22 inclusion deadline, and why it sometimes switches to Opus 4.8 |
 
-**The suggested learning path:** which-tool-when → installation → CLAUDE.md & memory → settings & permissions → slash commands → then pick the power feature or workflow that matches your next real task.
+**The full suggested learning path** (beginner → workflows → power features) lives on the [wiki home page](docs/wiki/README.md).
 
 ---
 
 ## 📚 The wiki
 
+The wiki home — [docs/wiki/README.md](docs/wiki/README.md) — has the map of contents and the staged learning path.
+
 ### 00 — Start here
 | Doc | What you'll learn |
 |---|---|
 | [Which tool when](docs/wiki/00-start-here/which-tool-when.md) | claude.ai vs mobile vs Desktop vs Claude Code CLI — decision flows for common author jobs |
+| [Quick start](docs/wiki/00-start-here/quick-start.md) | Zero to first win in 30 minutes, and the canonical one-folder book-project layout |
+| [Managing usage & cost](docs/wiki/00-start-here/managing-usage-and-cost.md) | Why long sessions burn your plan, five habits that fix it, and the API-user monitoring surface |
+| [Glossary](docs/wiki/00-start-here/glossary.md) | Every technical term in the wiki, defined in plain language |
 
 ### 01 — Claude Code basics
 | Doc | What you'll learn |
@@ -45,18 +51,19 @@ Claude Fable 5 launched on June 9, 2026 — Anthropic's most capable generally a
 | [MCP](docs/wiki/02-power-features/mcp.md) | Connect Claude to Notion, Obsidian, spreadsheets, and your story bible |
 | [Claude Desktop](docs/wiki/02-power-features/claude-desktop.md) | The Chat / Cowork / Code three-tab app — Claude Code without a terminal |
 
-### 03 — Author workflows *(in progress)*
+### 03 — Author workflows
 | Doc | What you'll learn |
 |---|---|
-| Drafting & revision | Story-bible-driven chapter pipelines, multi-pass audits, voice preservation |
-| Publishing ops | Format conversion, metadata, proofing passes, release checklists |
-| Marketing & launch | Manuscript-fed copy generation, blurb tournaments, launch runbooks |
-| Research & worldbuilding | Genre research fan-outs, world wikis, timeline extraction |
+| [Drafting & revision](docs/wiki/03-author-workflows/drafting-and-revision.md) | Story-bible-driven chapter pipelines, multi-pass audits, voice preservation |
+| [Publishing ops](docs/wiki/03-author-workflows/publishing-ops.md) | Format conversion, metadata, proofing passes, release checklists — plus audiobook narration via API |
+| [Marketing & launch](docs/wiki/03-author-workflows/marketing-and-launch.md) | Manuscript-fed copy generation, blurb tournaments, launch runbooks, cover/ad imagery via API |
+| [Research & worldbuilding](docs/wiki/03-author-workflows/research-and-worldbuilding.md) | Genre research fan-outs, world wikis, timeline extraction |
+| [Building, adopting & sharing tools](docs/wiki/03-author-workflows/adopting-and-sharing-tools.md) | Adopt a shared author tool safely, customize it cleanly, share yours back — and when an idea should become a skill, script, MCP server, or app |
 
-### 04 — Reference *(in progress)*
+### 04 — Reference
 | Doc | What you'll learn |
 |---|---|
-| Use-case catalog | The master table: every author use case × best surface × best mechanism × difficulty |
+| [Use-case catalog](docs/wiki/04-reference/use-case-catalog.md) | The master table: 100+ author use cases × best surface × best mechanism × difficulty, including the new Multimedia category |
 
 ### Fable 5 documentation
 | Doc | What it is |

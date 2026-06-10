@@ -22,7 +22,12 @@ who re-reads the entire manuscript-so-far before reacting to each new paragraph 
 re-reading is where the time (tokens) goes, not the reactions.
 
 This is why usage "burns out super fast" in long agentic sessions even when the visible
-answers are short: cost per turn keeps climbing as history accumulates.
+answers are short: cost per turn keeps climbing as history accumulates. (Anthropic's
+docs confirm the mechanics: each turn's input "contains all previous conversation
+history plus the current user message," growing linearly. One softener: Claude Code
+automatically uses *prompt caching*, which discounts re-sent repeated content — so
+history isn't re-billed at full price every turn, but a long session still costs more
+per message than a short one.)
 
 ## Why authors care
 
@@ -109,15 +114,67 @@ sources used, unverified claims, surprises) — never "tell me everything you fo
 scripted pipelines, route by step: `claude-fable-5` for plan/QA steps, a Sonnet-class
 model for mechanical passes.
 
-**Effort settings.** Fable 5's deeper self-verification at higher effort settings costs
-more output tokens. Use high effort for final QA, lower effort for intermediate passes.
+**Effort settings.** Thinking tokens are billed as output tokens, and higher effort
+levels spend more of them. Use `/effort` to lower the level for intermediate passes and
+keep high effort for final QA. Note: extended thinking cannot be *disabled* on Fable 5 —
+it always thinks; effort level is the dial you actually have.
 
 **Context window ≠ free.** Fable 5's 1M-token window means a trilogy *fits*; it does not
 mean carrying a trilogy in every turn is wise. Load big corpora into a subagent or
 query them with targeted reads.
 
-**Watch the meter.** In Claude Code, `/cost` (API billing) or your plan's usage page
-shows consumption; check after a representative session to find your own hot spots.
+**Watch the meter.** In Claude Code, `/usage` shows session token usage and an estimated
+dollar cost, plus — on Pro/Max/Team plans — usage bars against your plan limits and a
+breakdown by skill, subagent, plugin, and MCP server (press `d`/`w` to toggle 24-hour vs
+7-day views). `/cost` and `/stats` are aliases for the same screen. The dollar figure is
+a local estimate; for authoritative billing, API users should check the Console Usage
+page. Check after a representative session to find your own hot spots.
+
+## Advanced: API users
+
+If you pay per-token through the Claude API (instead of a Pro/Max subscription), you
+get harder numbers and better tooling. Everything below is for Console/API accounts.
+
+**Console dashboards.** The Claude Console has dedicated **Usage** and **Cost** pages
+([platform.claude.com/usage](https://platform.claude.com/usage)) — this is the
+authoritative bill, unlike the local estimate in `/usage`. When you first authenticate
+Claude Code with a Console account, a workspace named "Claude Code" is created
+automatically, giving you centralized cost tracking for all Claude Code usage in your
+organization (you can't create API keys in it; it exists for tracking). You can also
+set workspace spend limits to cap total spend.
+
+**OpenTelemetry monitoring.** Claude Code can export usage metrics to any
+OpenTelemetry (OTel) backend — useful if you run scripted pipelines (say, a nightly
+chapter-audit job) and want a dashboard of what they cost. Minimal setup:
+
+```bash
+export CLAUDE_CODE_ENABLE_TELEMETRY=1
+export OTEL_METRICS_EXPORTER=otlp      # or: prometheus, console, none
+export OTEL_LOGS_EXPORTER=otlp        # or: console, none
+export OTEL_EXPORTER_OTLP_PROTOCOL=grpc
+export OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4317
+```
+
+Exported metrics include `claude_code.token.usage` (tokens), `claude_code.cost.usage`
+(estimated USD per session), `claude_code.session.count`, and
+`claude_code.lines_of_code.count`. Metrics carry attributes like `user.id`,
+`session.id`, and the model — and per-request attribution by skill, subagent, plugin,
+and MCP server — so you can see *which* pipeline step burns the tokens. You can attach
+your own labels (e.g. per project or per pen name) via `OTEL_RESOURCE_ATTRIBUTES`.
+
+**Per-API-key usage tracking.** If you give each project (or each pipeline) its own API
+key, you can break down usage by key. Two routes:
+
+- The Console Usage page supports filtering and grouping similar to the API below.
+- The **Usage & Cost Admin API** (`/v1/organizations/usage_report/messages`) returns
+  token counts filterable/groupable by API key (`api_key_ids[]`), workspace, model, and
+  service tier; the companion `/v1/organizations/cost_report` endpoint returns USD costs
+  (daily buckets, groupable by workspace). Both require an **Admin API key**
+  (`sk-ant-admin...`) and an organization — the Admin API is not available on
+  individual accounts.
+
+For per-user Claude Code cost breakdowns specifically, Anthropic points at the Claude
+Code Analytics API rather than fanning out one API key per user.
 
 ## Sources
 
@@ -125,8 +182,18 @@ shows consumption; check after a representative session to find your own hot spo
   (pricing, context window, effort levels, model comparison) — verified 2026-06-10.
 - Repo-local: [`Claude_Fable_5_and_Claude_Mythos_5_Anthropic.md`](../../fable-documentation/Claude_Fable_5_and_Claude_Mythos_5_Anthropic.md)
   (launch facts) — verified 2026-06-10.
-- ⚠️ Unverified against a fetched official doc: the general mechanics of per-turn
-  history resend, token pricing asymmetry between input and output, and `/cost`
-  behavior are standard agentic-AI cost principles consistent with Anthropic's public
-  documentation, but were not re-fetched live for this page. Flag for verification in
-  the next research wave.
+- [Manage costs effectively](https://code.claude.com/docs/en/costs) — `/usage` command
+  behavior, local-estimate caveat, prompt caching/auto-compaction, effort and thinking
+  billed as output tokens, Fable 5 always-on extended thinking, Claude Code workspace,
+  spend limits — accessed 2026-06-10.
+- [Commands reference](https://code.claude.com/docs/en/commands) — `/cost` and `/stats`
+  as aliases of `/usage`; `/effort` levels — accessed 2026-06-10.
+- [Context windows](https://platform.claude.com/docs/en/build-with-claude/context-windows)
+  — per-turn history resend ("Input phase: contains all previous conversation history
+  plus the current user message"), linear growth, thinking blocks stripped from later
+  turns — accessed 2026-06-10.
+- [Monitoring (OpenTelemetry)](https://code.claude.com/docs/en/monitoring-usage) —
+  telemetry env vars, exported metrics and attributes — accessed 2026-06-10.
+- [Usage and Cost API](https://platform.claude.com/docs/en/build-with-claude/usage-cost-api)
+  — Console Usage/Cost pages, Admin API endpoints, per-API-key filtering, Admin key
+  requirement — accessed 2026-06-10.

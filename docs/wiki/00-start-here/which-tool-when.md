@@ -28,8 +28,9 @@ production floor where books get manufactured.
   Project, or a folder cleanup you did by hand because you didn't know Cowork existed.
 - One paid plan (Pro/Max) covers all four — usage is shared, so heavy agentic work
   in one surface draws from the same pool.
-- Your setup carries over more than you'd think: skills, MCP connectors, and (between
-  Desktop's Code tab and the CLI) even your `CLAUDE.md` and settings are shared.
+- Some setup carries over: Desktop's Code tab and the CLI share your `CLAUDE.md`,
+  settings, and project skills. Chat surfaces (claude.ai, Desktop's Chat tab) keep
+  their own separate copies of skills — see [skills.md](../02-power-features/skills.md).
 
 ## Getting started
 
