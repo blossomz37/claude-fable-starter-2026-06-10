@@ -38,6 +38,27 @@ Legend: ☐ not started · ◐ in progress · ☑ done (orchestrator-reviewed)
 - ☐ NEW: add a usage/cost-management page or section (Carlo hit session limits
   mid-wave; wiki should teach mitigation: cheaper models for subagents,
   /usage, /clear, /compact, batch sizing, model-per-agent).
+- ☐ NEW (from Carlo's ideas-01.md, logged 2026-06-10): four topics for Wave 3 —
+  1. **One-folder end-to-end project**: quick-start.md should establish ONE
+     canonical book-project folder layout and show how each workflow doc's
+     structure (drafting's bible/, publishing's output/, marketing/, research/,
+     world/) slots into it as subfolders. Today each deep dive shows its own
+     separate layout; nothing unifies them.
+  2. **Authors building custom tools/apps** (vibecoding: Electron apps, web
+     components, author utilities): essentially uncovered (only a one-line
+     `mcpb` mention in mcp.md). Fold into the planned
+     adopting-and-sharing-tools.md → retitle scope to "building, adopting, and
+     sharing author tools."
+  3. **Audio & image generation via third-party APIs** (ElevenLabs narration,
+     Midjourney/Ideogram covers): zero current coverage. Add a new use-case-
+     catalog category (Multimedia) + a short section in publishing-ops or
+     marketing Advanced. Honesty flags required: Midjourney has no official
+     API (⚠️ workaround-only, like the Vellum rows); ElevenLabs does.
+  4. **API observability/cost management**: managing-usage-and-cost.md covers
+     plan usage + `/cost` only. Add an "Advanced: API users" section (Console
+     usage dashboards, Claude Code OpenTelemetry support, per-key tracking) —
+     verify against official docs during the Wave 3 ⚠️-claims sweep already
+     scheduled for that page.
 
 ## Wave 3 — Starter-kit assembly
 - ☐ quick-start.md
