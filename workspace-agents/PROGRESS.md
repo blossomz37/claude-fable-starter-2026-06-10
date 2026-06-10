@@ -13,18 +13,21 @@ Legend: ☐ not started · ◐ in progress · ☑ done (orchestrator-reviewed)
 - ☑ Wave 1 orchestrator QA + commit (all 10 docs read in full; passed)
 
 ## Wave 2 — Author workflow deep dives
-- ◐ W2-A Drafting & revision — file complete on disk (404 lines); agent died at
-  usage limit BEFORE delivering accuracy report → QA must be extra careful
-- ◐ W2-B Publishing ops — same (386 lines, no report)
-- ◐ W2-C Marketing & launch — file complete (353 lines) + full accuracy report
-  received (1 web check: KDP AI-disclosure policy verified; Apr-2026 enforcement
-  claim is press-only, flagged in doc)
-- ◐ W2-D Research & worldbuilding — file complete on disk (393 lines); no report
-- ◐ W2-E Use-case catalog — file complete (317 lines, 97 use cases) + full report
-  (EPUB tooling and Vellum automation flagged ⚠️ as workaround-only)
-- ☐ Wave 2 orchestrator QA + commit + push (NOT started — usage limit hit
-  2026-06-10 ~1pm, resets 1:30pm PT; QA W2-A/B/D with extra scrutiny since
-  their self-reports were lost)
+- ☑ W2-A Drafting & revision (404 lines; lost report compensated by orchestrator
+  spot-checks — all platform claims verified against Wave 1 docs)
+- ☑ W2-B Publishing ops (386 lines; external KDP/Vellum claims already ⚠️-flagged
+  in-doc; pandoc/EPUBCheck claims sound)
+- ☑ W2-C Marketing & launch (353 lines + full accuracy report)
+- ☑ W2-D Research & worldbuilding (393 lines; `arguments:` frontmatter and
+  classifier-fallback claims verified against Wave 1 docs)
+- ☑ W2-E Use-case catalog (317 lines; catalog format deviates from DOC_TEMPLATE
+  required structure — acceptable for a 04-reference master-table doc per plan spec)
+- ☑ Wave 2 orchestrator QA + commit + push (2026-06-10, second resume session):
+  all 5 docs read in full once; scripted cross-link check — zero broken links;
+  spot-checked W2-A/B/D platform claims against QA'd Wave 1 docs (memory field,
+  prompt-type Stop hooks, FileChanged, arguments frontmatter,
+  disable-model-invocation, 1M context, 4×/15× multipliers, pricing/free window,
+  Opus 4.8 classifier fallback) — all confirmed. No fixes needed; PASS.
 - ☐ NEW (from Carlo, this session): add
   docs/wiki/03-author-workflows/adopting-and-sharing-tools.md in Wave 3 —
   intake → cleanup → re-architect method for adopting shared author tools
@@ -60,3 +63,6 @@ Legend: ☐ not started · ◐ in progress · ☑ done (orchestrator-reviewed)
 - 2026-06-10: Token-burn mitigation session. Added managing-usage-and-cost.md wiki
   page; hardened token discipline into CLAUDE.md, plan, and doc template. Key rule:
   subagent reports ≤1 page, no raw dumps; sessions end at wave boundaries with handoffs.
+- 2026-06-10: Wave 2 QA session. All 5 docs PASS (full reads, scripted link check,
+  spot-checks vs Wave 1 docs replacing the lost W2-A/B/D reports). Wave 2 complete.
+  Next: Wave 3 (includes the two NEW items above).
