@@ -64,3 +64,14 @@ After writing your file(s), your final message back to the orchestrator must con
 - Official sources actually fetched (URLs)
 - A list of claims you could not verify (or "none")
 - Anything surprising/newer than expected that the orchestrator should know
+
+Your report is the ONLY thing that enters the orchestrator's context. Keep it under
+one page. Do NOT paste doc contents, raw research notes, or fetched page text back
+to the orchestrator — write findings into your output file(s) instead.
+
+## Subagent token discipline
+
+- No progress narration in your messages; work silently, report once at the end.
+- Read source files surgically (targeted sections), and never re-read a file already
+  in your context unless it changed.
+- Fetch each external source once; take notes into your draft rather than re-fetching.

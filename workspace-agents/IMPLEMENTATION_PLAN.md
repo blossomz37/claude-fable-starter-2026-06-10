@@ -37,6 +37,7 @@ docs/
       quick-start.md                    # W3
       glossary.md                       # W3
       which-tool-when.md                # W1-G (CLI vs Desktop vs claude.ai)
+      managing-usage-and-cost.md        # added 2026-06-10 (token discipline for authors)
     01-claude-code-basics/
       installation-setup.md             # W1-B
       claude-md-and-memory.md           # W1-B
@@ -100,9 +101,25 @@ skill ecosystem where it exists (see "Carlo's context" below).
 1. `00-start-here/quick-start.md` — author's first 30 minutes, zero to first win.
 2. `00-start-here/glossary.md` — every term used anywhere in the wiki, plain language.
 3. `wiki/README.md` — wiki home: map of contents + suggested learning path
-   (beginner → workflows → power features).
+   (beginner → workflows → power features). Include `managing-usage-and-cost.md`
+   early in the learning path.
 4. Final QA sweep: link check, terminology consistency vs glossary, no orphan docs.
+   Also verify the ⚠️-flagged claims in `managing-usage-and-cost.md` against official
+   Anthropic docs (per-turn history resend mechanics, `/cost` command, effort-level
+   cost behavior).
 5. Final commit + update PROGRESS.md to DONE.
+
+## Token discipline (binding for orchestrator and all subagents)
+
+See the "Token discipline" section of the workspace `CLAUDE.md` — it is binding here.
+Operational consequences for this project:
+
+- Wave 2/3 subagents read Wave 1 docs **surgically** (section-targeted), not in full,
+  except where the slice genuinely requires a full read.
+- Subagent reports follow the cap in DOC_TEMPLATE.md (≤1 page, no raw dumps).
+- Orchestrator QA reads produced docs once, in full, per wave — then relies on
+  PROGRESS.md notes instead of re-reading.
+- One handoff file per session end, dated, in `workspace-agents/handoffs/`.
 
 ## Carlo's context (for Wave 2 agents)
 
