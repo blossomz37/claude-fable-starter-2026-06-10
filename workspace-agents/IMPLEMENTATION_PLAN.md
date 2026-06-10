@@ -54,6 +54,7 @@ docs/
       publishing-ops.md                 # W2-B
       marketing-and-launch.md           # W2-C
       research-and-worldbuilding.md     # W2-D
+      adopting-and-sharing-tools.md     # W3 (building, adopting & sharing author tools)
     04-reference/
       use-case-catalog.md               # W2-E (master list of author use cases)
 ```
@@ -98,16 +99,40 @@ skill ecosystem where it exists (see "Carlo's context" below).
 
 ### Wave 3 — Starter-kit assembly (orchestrator-led)
 
+Items 4–6 come from Carlo's `ideas-01.md` review (2026-06-10); details in PROGRESS.md.
+
 1. `00-start-here/quick-start.md` — author's first 30 minutes, zero to first win.
+   **Must establish the canonical one-folder book-project layout** and show how
+   each workflow doc's structure (drafting's `bible/`, publishing's `output/` and
+   `published/`, `marketing/`, `research/` + `world/`) slots into it as subfolders —
+   the deep dives each show their own layout; quick-start unifies them.
 2. `00-start-here/glossary.md` — every term used anywhere in the wiki, plain language.
 3. `wiki/README.md` — wiki home: map of contents + suggested learning path
    (beginner → workflows → power features). Include `managing-usage-and-cost.md`
    early in the learning path.
-4. Final QA sweep: link check, terminology consistency vs glossary, no orphan docs.
-   Also verify the ⚠️-flagged claims in `managing-usage-and-cost.md` against official
-   Anthropic docs (per-turn history resend mechanics, `/cost` command, effort-level
-   cost behavior).
-5. Final commit + update PROGRESS.md to DONE.
+4. `03-author-workflows/adopting-and-sharing-tools.md` — **building, adopting,
+   and sharing author tools.** Adopting half (drafted in conversation 2026-06-10,
+   see token-discipline handoff): intake → cleanup → re-architect method,
+   three-layer model (engine/conventions/personal), PROFILE.md extraction,
+   ADAPTING.md self-onboarding prompt, delta log, scrub-before-reshare. Building
+   half (new): vibecoding author utilities — when a prompt should become a skill,
+   a script, an MCP server, or a small app; rapid prototyping with Claude Code.
+5. **Multimedia generation coverage** (audio + image via third-party APIs):
+   new "Multimedia" category in `04-reference/use-case-catalog.md` (audiobook
+   narration via ElevenLabs API, cover/ad imagery via Ideogram etc.) plus a short
+   Advanced section in `publishing-ops.md` or `marketing-and-launch.md`.
+   Honesty flags: Midjourney has no official API → ⚠️ workaround-only rows,
+   same treatment as Vellum; ElevenLabs has a real API.
+6. **API observability & cost** — add an "Advanced: API users" section to
+   `00-start-here/managing-usage-and-cost.md`: Console usage dashboards, Claude
+   Code OpenTelemetry support, per-key tracking. Verify against official docs as
+   part of the same sweep as item 7.
+7. Final QA sweep: link check, terminology consistency vs glossary, no orphan docs
+   (catalog + README must link the new tools page). Verify the ⚠️-flagged claims in
+   `managing-usage-and-cost.md` against official Anthropic docs (per-turn history
+   resend mechanics, `/cost` command, effort-level cost behavior) and the new
+   multimedia/API-observability claims from items 5–6.
+8. Final commit + update PROGRESS.md to DONE.
 
 ## Token discipline (binding for orchestrator and all subagents)
 
