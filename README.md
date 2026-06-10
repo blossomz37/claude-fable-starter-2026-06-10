@@ -20,6 +20,9 @@ Claude Fable 5 launched on June 9, 2026 — Anthropic's most capable generally a
 
 **The full suggested learning path** (beginner → workflows → power features) lives on the [wiki home page](docs/wiki/README.md).
 
+> [!TIP]
+> **Don't want to read the wiki? Ask it.** This kit ships with a built-in advisor skill: open Claude Code in this repo and type `/fable-guide` followed by your question — or just ask naturally ("help me set up my book project"). It finds and reads the right wiki page so you don't have to.
+
 ---
 
 ## 📚 The wiki

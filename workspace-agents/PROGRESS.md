@@ -62,6 +62,12 @@ Legend: ☐ not started · ◐ in progress · ☑ done (orchestrator-reviewed)
 - ☑ Final commit + push
 
 ## Out-of-wave additions
+- ☑ `.claude/skills/fable-guide/SKILL.md` (2026-06-10, post-Wave-3, from Carlo's
+  `workspace-carlo/ideas/agent-helper.md`) — project skill shipping with the kit:
+  warm/authoritative advisor with a routing map over all 20 wiki pages and three
+  modes (explain a topic / build a Fable-optimized skill / architect a workspace).
+  Linked from root README (tip box) and wiki README. Travels with the repo so
+  every starter-kit user gets `/fable-guide`.
 - ☑ 00-start-here/managing-usage-and-cost.md (token discipline for authors) — written
   by orchestrator 2026-06-10; ⚠️ flags pending live verification in Wave 3 QA.
 - ☑ Token discipline hardened into CLAUDE.md, IMPLEMENTATION_PLAN.md, DOC_TEMPLATE.md

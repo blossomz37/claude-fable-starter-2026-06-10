@@ -36,6 +36,8 @@ Follow this order if you're new. Stop at any point — each stage leaves you wit
 
 Stuck on a word? The [Glossary](00-start-here/glossary.md) defines every technical term in the wiki in plain language.
 
+**Don't want to read at all?** This kit ships with its own advisor: open Claude Code in this repo and type `/fable-guide` (or just ask a question — "how do I protect my manuscript?"). It reads the right wiki page for you and answers in plain language. The skill lives at [.claude/skills/fable-guide/SKILL.md](../../.claude/skills/fable-guide/SKILL.md) — itself a working example of what [skills.md](02-power-features/skills.md) teaches.
+
 ## Map of contents
 
 | Section | Docs |
