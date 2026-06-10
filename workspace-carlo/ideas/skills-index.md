@@ -1,0 +1,1 @@
+You should create an INDEX.md or CONTEXT.md that will have the tree structure for your skills that will be read rather than the yaml for each skill
