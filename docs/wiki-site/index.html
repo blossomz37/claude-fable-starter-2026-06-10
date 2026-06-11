@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>The Claude Fable Starter Kit Wiki</title>
+<title>Fable 5 for Authors</title>
 <style>
 :root {
   --bg: #ffffff;
@@ -13,7 +13,10 @@
   --faint: #9b9b9b;
   --hairline: #e7e7e7;
   --code-bg: #f5f5f5;
-  --link: #a8471d;
+  --link: #0284C7;
+  --accent: #6D28D9;
+  --accent-bright: #8B5CF6;
+  --accent-deep: #4C1D95;
   --panel: #fafafa;
   --quote-text: #3d3d3d;
   --nav-text: #3c3c3c;
@@ -30,7 +33,10 @@
     --faint: #828282;
     --hairline: #2c2c2c;
     --code-bg: #222222;
-    --link: #e08e63;
+    --link: #38BDF8;
+    --accent: #A78BFA;
+    --accent-bright: #C4B5FD;
+    --accent-deep: #7C3AED;
     --panel: #1d1d1d;
     --quote-text: #c4c4c4;
     --nav-text: #cfcfcf;
@@ -40,7 +46,14 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 [id] { scroll-margin-top: 24px; }
 body {
   margin: 0;
@@ -48,7 +61,18 @@ body {
   color: var(--text);
   font: 400 15.5px/1.65 -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", system-ui, sans-serif;
   letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
 }
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(90deg, var(--accent-deep), var(--accent) 34%, var(--accent-bright) 62%, var(--accent-deep));
+}
+::selection { background: color-mix(in oklab, var(--accent) 24%, transparent); }
 
 /* ---- sidebar ---- */
 nav {
@@ -59,6 +83,13 @@ nav {
   border-right: 1px solid var(--hairline);
   padding: 28px 20px 40px 28px;
 }
+nav::-webkit-scrollbar, .toc::-webkit-scrollbar, .table-wrap::-webkit-scrollbar, pre::-webkit-scrollbar { width: 8px; height: 8px; }
+nav::-webkit-scrollbar-thumb, .toc::-webkit-scrollbar-thumb, .table-wrap::-webkit-scrollbar-thumb, pre::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--accent) 22%, var(--hairline));
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
 nav .site-title {
   display: block;
   font-family: var(--font-mono);
@@ -67,35 +98,37 @@ nav .site-title {
   line-height: 1.45;
   color: var(--text);
   text-decoration: none;
-  margin-bottom: 6px;
-}
-nav .site-sub {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--nav-label);
-  margin: 0 0 28px;
+  margin-bottom: 28px;
 }
 nav .section {
   font-family: var(--font-mono);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--nav-label);
+  color: color-mix(in oklab, var(--accent) 78%, var(--text));
   margin: 26px 0 8px;
 }
 nav a.page {
   display: block;
-  padding: 4px 0 4px 10px;
-  margin-left: -12px;
-  border-left: 2px solid transparent;
+  padding: 5px 10px;
+  margin: 1px 0 1px -10px;
+  border-radius: 6px;
   font-size: 13.5px;
   color: var(--nav-text);
   text-decoration: none;
-  transition: color 0.12s ease;
+  transition: color 0.12s ease, background 0.12s ease, transform 0.14s ease;
 }
-nav a.page:hover { color: var(--text); }
-nav a.page.active { color: var(--text); font-weight: 600; border-left-color: var(--link); }
+nav a.page:hover {
+  color: var(--accent);
+  background: color-mix(in oklab, var(--accent) 6%, var(--bg));
+  transform: translateX(3px);
+}
+nav a.page.active {
+  color: var(--text);
+  font-weight: 600;
+  background: color-mix(in oklab, var(--accent) 8%, var(--bg));
+}
 
 /* ---- content ---- */
 main {
@@ -103,7 +136,16 @@ main {
   padding: 56px 56px 96px;
 }
 main > section { display: none; max-width: 42.5rem; }
-main > section.active { display: block; }
+main > section.active { display: block; animation: pageIn 0.28s ease; }
+@keyframes pageIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+main > section.active > h1 { animation: headIn 0.28s ease; }
+@keyframes headIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
 
 h1 {
   font-size: 27px;
@@ -113,13 +155,25 @@ h1 {
   margin: 0 0 20px;
 }
 h2 {
+  position: relative;
   font-size: 19px;
   font-weight: 600;
   letter-spacing: -0.014em;
   line-height: 1.3;
   margin: 44px 0 12px;
   padding-top: 24px;
-  border-top: 1px solid var(--hairline);
+}
+h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg,
+    color-mix(in oklab, var(--accent) 60%, var(--hairline)) 0 22px,
+    var(--hairline) 22px 60%,
+    transparent);
 }
 h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; margin: 30px 0 8px; }
 h4 { font-size: 14.5px; font-weight: 600; margin: 24px 0 6px; }
@@ -127,7 +181,7 @@ p { margin: 0 0 14px; }
 ul, ol { margin: 0 0 14px; padding-left: 22px; }
 li { margin: 4px 0; }
 li > ul, li > ol { margin-bottom: 0; }
-hr { border: 0; border-top: 1px solid var(--hairline); margin: 36px 0; }
+hr { border: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--hairline) 18% 82%, transparent); margin: 36px 0; }
 
 a {
   color: var(--link);
@@ -147,11 +201,21 @@ blockquote {
 blockquote p:last-child { margin-bottom: 0; }
 /* The "In plain words" opener every page leads with. */
 h1 + blockquote {
-  background: var(--panel);
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-  padding: 16px 20px;
+  background: color-mix(in oklab, var(--accent) 4%, var(--bg));
+  border: 1px solid color-mix(in oklab, var(--accent) 15%, var(--bg));
+  border-radius: 10px;
+  padding: 16px 20px 15px;
   margin-bottom: 28px;
+}
+h1 + blockquote p:first-child > strong:first-child {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  margin-bottom: 7px;
 }
 
 .hanchor {
@@ -172,7 +236,8 @@ code, kbd {
 code { background: var(--code-bg); border-radius: 4px; padding: 1.5px 5px; }
 pre {
   background: var(--code-bg);
-  border-radius: 6px;
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
   padding: 14px 16px;
   overflow-x: auto;
   margin: 0 0 16px;
@@ -188,14 +253,20 @@ kbd {
   font-size: 0.8em;
 }
 
-.table-wrap { overflow-x: auto; margin: 0 0 18px; }
+.table-wrap {
+  overflow-x: auto;
+  margin: 0 0 18px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--panel);
+}
 .table-wrap.fits { overflow: visible; }
 table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13.5px; line-height: 1.5; }
 th {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: var(--bg);
+  background: var(--code-bg);
   text-align: left;
   font-family: var(--font-mono);
   font-size: 10.5px;
@@ -203,27 +274,42 @@ th {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--muted);
-  padding: 8px 14px 8px 0;
-  box-shadow: inset 0 -1px 0 var(--text);
-}
-td {
-  vertical-align: top;
-  padding: 9px 14px 9px 0;
+  padding: 9px 14px;
   border-bottom: 1px solid var(--hairline);
 }
-tbody tr:hover td { background: var(--panel); }
+th:first-child { border-top-left-radius: 9px; }
+th:last-child { border-top-right-radius: 9px; }
+td {
+  vertical-align: top;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--hairline);
+}
+tbody tr:last-child td { border-bottom: 0; }
+tbody tr:hover td { background: color-mix(in oklab, var(--accent) 3.5%, var(--bg)); }
 
 .pager {
   display: flex;
   justify-content: space-between;
-  gap: 24px;
+  gap: 14px;
   margin-top: 56px;
-  padding-top: 20px;
-  border-top: 1px solid var(--hairline);
   font-size: 13.5px;
 }
-.pager a { text-decoration: none; color: var(--text); max-width: 48%; }
-.pager a:hover .pager-title { text-decoration: underline; }
+.pager a {
+  text-decoration: none;
+  color: var(--text);
+  max-width: 48%;
+  padding: 13px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 10px;
+  background: var(--panel);
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+.pager a:hover {
+  border-color: color-mix(in oklab, var(--accent) 35%, var(--hairline));
+  transform: translateY(-1px);
+}
+.pager a:hover .pager-title { color: var(--accent); }
+.pager-title { font-weight: 600; transition: color 0.15s ease; }
 .pager .label { display: block; font-family: var(--font-mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); margin-bottom: 3px; }
 .pager .next { margin-left: auto; text-align: right; }
 
@@ -253,10 +339,10 @@ footer.colophon {
   .toc-label {
     font-family: var(--font-mono);
     font-size: 10px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: var(--nav-label);
+    color: color-mix(in oklab, var(--accent) 78%, var(--text));
     margin-bottom: 8px;
   }
   .toc a {
@@ -266,12 +352,12 @@ footer.colophon {
     border-left: 2px solid transparent;
     font-size: 12.5px;
     line-height: 1.45;
-    color: var(--muted);
+    color: var(--nav-text);
     text-decoration: none;
-    transition: color 0.12s ease;
+    transition: color 0.12s ease, transform 0.14s ease;
   }
-  .toc a:hover { color: var(--text); }
-  .toc a.active { color: var(--text); border-left-color: var(--link); }
+  .toc a:hover { color: var(--accent); transform: translateX(2px); }
+  .toc a.active { color: var(--text); font-weight: 600; border-left-color: var(--accent); }
   /* A-Z index strip (glossary-style pages) */
   .toc-grid {
     display: grid;
@@ -290,11 +376,11 @@ footer.colophon {
     border-radius: 4px;
     font-family: var(--font-mono);
     font-size: 11.5px;
-    color: var(--muted);
+    color: var(--nav-text);
   }
-  .toc.toc-index .toc-grid a:hover { color: var(--text); border-color: var(--hairline); }
+  .toc.toc-index .toc-grid a:hover { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 35%, var(--hairline)); }
   .toc.toc-index .toc-grid a.active {
-    color: var(--link);
+    color: var(--accent);
     border-color: var(--hairline);
     background: var(--panel);
   }
@@ -315,14 +401,76 @@ footer.colophon {
   cursor: pointer;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.12s ease, color 0.12s ease;
+  transition: opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease, transform 0.12s ease;
 }
 .to-top.show { opacity: 1; pointer-events: auto; }
-.to-top:hover { color: var(--text); }
+.to-top:hover { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 40%, var(--hairline)); transform: translateY(-2px); }
+
+/* ---- sidebar resize & collapse ---- */
+nav { transition: transform 0.2s ease; }
+main { transition: margin-left 0.2s ease; }
+.nav-resizer {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--sidebar-w) - 4px);
+  width: 8px;
+  z-index: 4;
+  cursor: col-resize;
+}
+.nav-resizer::after {
+  content: "";
+  position: absolute;
+  inset: 0 3px;
+  background: transparent;
+  transition: background 0.12s ease;
+}
+.nav-resizer:hover::after,
+body.nav-resizing .nav-resizer::after {
+  background: color-mix(in oklab, var(--accent) 45%, transparent);
+}
+.nav-collapse {
+  position: fixed;
+  top: 30px;
+  left: calc(var(--sidebar-w) - 13px);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 50%;
+  color: var(--muted);
+  cursor: pointer;
+  transition: left 0.2s ease, color 0.12s ease, border-color 0.12s ease;
+}
+.nav-collapse:hover {
+  color: var(--accent);
+  border-color: color-mix(in oklab, var(--accent) 40%, var(--hairline));
+}
+.nav-collapse svg { display: block; transition: transform 0.2s ease; }
+body.nav-collapsed nav { transform: translateX(-100%); }
+body.nav-collapsed main { margin-left: 0; }
+body.nav-collapsed .nav-resizer { display: none; }
+body.nav-collapsed .nav-collapse { left: 14px; }
+body.nav-collapsed .nav-collapse svg { transform: rotate(180deg); }
+body.nav-resizing { cursor: col-resize; user-select: none; }
+body.nav-resizing nav, body.nav-resizing main { transition: none; }
 
 /* ---- small screens ---- */
 .menu-toggle { display: none; }
 @media (max-width: 880px) {
+  .nav-resizer, .nav-collapse { display: none; }
+  body.nav-open::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.28);
+  }
   .menu-toggle {
     display: block;
     position: fixed;
@@ -352,9 +500,10 @@ footer.colophon {
 </head>
 <body>
 <button class="menu-toggle" aria-label="Toggle navigation">Menu</button>
+<div class="nav-resizer" aria-hidden="true"></div>
+<button class="nav-collapse" aria-label="Collapse sidebar" aria-expanded="true"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"></path></svg></button>
 <nav>
-<a class="site-title" href="#home">The Claude Fable Starter Kit Wiki</a>
-<p class="site-sub">For fiction authors, terminal optional</p>
+<a class="site-title" href="#home">Fable 5 for Authors</a>
 <div class="section">Start here</div>
 <a class="page" data-page="which-tool-when" href="#which-tool-when">Which tool when</a>
 <a class="page" data-page="quick-start" href="#quick-start">Quick start</a>
@@ -395,10 +544,33 @@ footer.colophon {
 <li><a href="#quick-start">Quick start</a> — your first 30 minutes, including the <strong>one-folder book project</strong> layout the whole wiki builds on.</li>
 <li><a href="#managing-usage-and-cost">Managing usage and cost</a> — read this <em>early</em>. Usage limits are real, and five habits make your plan last dramatically longer.</li>
 </ol>
-<p><strong>Stage 2 — Set up your workshop</strong> 4. <a href="#installation-setup">Installation &amp; setup</a> — terminal basics included, no experience assumed. 5. <a href="#claude-md-and-memory">CLAUDE.md &amp; memory</a> — how Claude remembers your project, voice, and rules. 6. <a href="#settings-and-permissions">Settings &amp; permissions</a> — what Claude may touch, and how to say so once instead of every time. 7. <a href="#slash-commands">Slash commands</a> — the built-in commands you'll actually use.</p>
-<p><strong>Stage 3 — Do real author work</strong> (pick the one matching your next task) 8. <a href="#drafting-and-revision">Drafting &amp; revision</a> — story bible, chapter pipelines, continuity passes. 9. <a href="#research-and-worldbuilding">Research &amp; worldbuilding</a> — research notes, world files, fact tracking. 10. <a href="#publishing-ops">Publishing ops</a> — manuscript to EPUB/print, metadata, retailer prep. 11. <a href="#marketing-and-launch">Marketing &amp; launch</a> — blurbs, ads, launch plans, imagery.</p>
-<p><strong>Stage 4 — Power features</strong> (when a workflow doc says "this can be packaged as a…") 12. <a href="#skills">Skills</a> — turn a repeated prompt into a reusable, shareable command. 13. <a href="#subagents-and-orchestration">Subagents &amp; orchestration</a> — parallel helpers that do heavy reading without burning your session. 14. <a href="#hooks">Hooks</a> — automatic checks that run without being asked. 15. <a href="#mcp">MCP</a> — connect Claude to outside tools and services. 16. <a href="#claude-desktop">Claude Desktop</a> — Chat, Cowork, and Code outside the terminal.</p>
-<p><strong>Stage 5 — Go further</strong> 17. <a href="#adopting-and-sharing-tools">Building, adopting, and sharing author tools</a> — adopt another author's shared tool safely, customize it, share yours back; plus when an idea should become a skill, script, MCP server, or app. 18. <a href="#use-case-catalog">Use-case catalog</a> — 100+ concrete author use cases in one master table, including the Multimedia category (audiobook narration, cover imagery via APIs).</p>
+<p><strong>Stage 2 — Set up your workshop</strong></p>
+<ol type="1" start="4">
+<li><a href="#installation-setup">Installation &amp; setup</a> — terminal basics included, no experience assumed.</li>
+<li><a href="#claude-md-and-memory">CLAUDE.md &amp; memory</a> — how Claude remembers your project, voice, and rules.</li>
+<li><a href="#settings-and-permissions">Settings &amp; permissions</a> — what Claude may touch, and how to say so once instead of every time.</li>
+<li><a href="#slash-commands">Slash commands</a> — the built-in commands you'll actually use.</li>
+</ol>
+<p><strong>Stage 3 — Do real author work</strong> (pick the one matching your next task)</p>
+<ol type="1" start="8">
+<li><a href="#drafting-and-revision">Drafting &amp; revision</a> — story bible, chapter pipelines, continuity passes.</li>
+<li><a href="#research-and-worldbuilding">Research &amp; worldbuilding</a> — research notes, world files, fact tracking.</li>
+<li><a href="#publishing-ops">Publishing ops</a> — manuscript to EPUB/print, metadata, retailer prep.</li>
+<li><a href="#marketing-and-launch">Marketing &amp; launch</a> — blurbs, ads, launch plans, imagery.</li>
+</ol>
+<p><strong>Stage 4 — Power features</strong> (when a workflow doc says "this can be packaged as a…")</p>
+<ol type="1" start="12">
+<li><a href="#skills">Skills</a> — turn a repeated prompt into a reusable, shareable command.</li>
+<li><a href="#subagents-and-orchestration">Subagents &amp; orchestration</a> — parallel helpers that do heavy reading without burning your session.</li>
+<li><a href="#hooks">Hooks</a> — automatic checks that run without being asked.</li>
+<li><a href="#mcp">MCP</a> — connect Claude to outside tools and services.</li>
+<li><a href="#claude-desktop">Claude Desktop</a> — Chat, Cowork, and Code outside the terminal.</li>
+</ol>
+<p><strong>Stage 5 — Go further</strong></p>
+<ol type="1" start="17">
+<li><a href="#adopting-and-sharing-tools">Building, adopting, and sharing author tools</a> — adopt another author's shared tool safely, customize it, share yours back; plus when an idea should become a skill, script, MCP server, or app.</li>
+<li><a href="#use-case-catalog">Use-case catalog</a> — 100+ concrete author use cases in one master table, including the Multimedia category (audiobook narration, cover imagery via APIs).</li>
+</ol>
 <p>Stuck on a word? The <a href="#glossary">Glossary</a> defines every technical term in the wiki in plain language.</p>
 <p><strong>Don't want to read at all?</strong> This kit ships with its own advisor: open Claude Code in this repo and type <code>/fable-guide</code> (or just ask a question — "how do I protect my manuscript?"). It reads the right wiki page for you and answers in plain language. The skill lives at <a href="../../.claude/skills/fable-guide/SKILL.md">.claude/skills/fable-guide/SKILL.md</a> — itself a working example of what <a href="#skills">skills.md</a> teaches.</p>
 <h2 id="home--map-of-contents">Map of contents<a class="hanchor" href="#home/map-of-contents" aria-label="Link to this section">#</a></h2>
@@ -4824,7 +4996,7 @@ with a dated entry for this merge.</code></pre>
 </section>
 </main>
 <button class="to-top" aria-label="Back to top">&#8593; Top</button>
-<script>const SITE_TITLE = 'The Claude Fable Starter Kit Wiki';
+<script>const SITE_TITLE = 'Fable 5 for Authors';
 const sections = document.querySelectorAll('main > section');
 const navLinks = document.querySelectorAll('nav a.page');
 
@@ -4882,6 +5054,47 @@ toTop.addEventListener('click', () => {
 window.addEventListener('hashchange', route);
 document.querySelector('.menu-toggle').addEventListener('click', () => {
   document.body.classList.toggle('nav-open');
+});
+
+// Sidebar drag-resize + collapse
+const SBW_KEY = 'fable-wiki-sidebar-w';
+const SBC_KEY = 'fable-wiki-sidebar-collapsed';
+const rootEl = document.documentElement;
+const resizer = document.querySelector('.nav-resizer');
+const collapseBtn = document.querySelector('.nav-collapse');
+const savedW = parseInt(localStorage.getItem(SBW_KEY), 10);
+if (savedW >= 180 && savedW <= 440) rootEl.style.setProperty('--sidebar-w', savedW + 'px');
+if (localStorage.getItem(SBC_KEY) === '1') {
+  document.body.classList.add('nav-collapsed');
+  collapseBtn.setAttribute('aria-expanded', 'false');
+  collapseBtn.setAttribute('aria-label', 'Expand sidebar');
+}
+let sbDragging = false;
+resizer.addEventListener('pointerdown', e => {
+  sbDragging = true;
+  document.body.classList.add('nav-resizing');
+  resizer.setPointerCapture(e.pointerId);
+  e.preventDefault();
+});
+resizer.addEventListener('pointermove', e => {
+  if (!sbDragging) return;
+  const w = Math.min(440, Math.max(180, Math.round(e.clientX)));
+  rootEl.style.setProperty('--sidebar-w', w + 'px');
+});
+function sbEndDrag() {
+  if (!sbDragging) return;
+  sbDragging = false;
+  document.body.classList.remove('nav-resizing');
+  const w = parseInt(getComputedStyle(rootEl).getPropertyValue('--sidebar-w'), 10);
+  if (w) localStorage.setItem(SBW_KEY, String(w));
+}
+resizer.addEventListener('pointerup', sbEndDrag);
+resizer.addEventListener('pointercancel', sbEndDrag);
+collapseBtn.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  collapseBtn.setAttribute('aria-expanded', String(!collapsed));
+  collapseBtn.setAttribute('aria-label', collapsed ? 'Expand sidebar' : 'Collapse sidebar');
+  localStorage.setItem(SBC_KEY, collapsed ? '1' : '0');
 });
 route();
 </script>
