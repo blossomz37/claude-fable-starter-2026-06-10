@@ -157,7 +157,7 @@ nav .site-title {
 }
 nav .site-sub {
   font-size: 12px;
-  color: var(--faint);
+  color: #767676;
   margin: 0 0 28px;
 }
 nav .section {
@@ -165,14 +165,14 @@ nav .section {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: var(--faint);
+  color: #767676;
   margin: 26px 0 8px;
 }
 nav a.page {
   display: block;
   padding: 4px 0;
   font-size: 13.5px;
-  color: var(--muted);
+  color: #3c3c3c;
   text-decoration: none;
 }
 nav a.page:hover { color: var(--text); }
