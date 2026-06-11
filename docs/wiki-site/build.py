@@ -93,6 +93,16 @@ def rewrite_page(html: str, page_rel: str, slug: str) -> str:
         return f'href="{repo_rel}"'
 
     html = re.sub(r'href="([^"]+)"', fix_href, html)
+
+    # Hover-revealed anchor links on h2/h3 for shareable deep links.
+    def add_anchor(m):
+        level, hid, inner = m.groups()
+        frag = hid.split("--", 1)[1]
+        return (f'<h{level} id="{hid}">{inner}'
+                f'<a class="hanchor" href="#{slug}/{frag}" aria-label="Link to this section">#</a>'
+                f'</h{level}>')
+
+    html = re.sub(r'<h([23]) id="([^"]+)">(.*?)</h\1>', add_anchor, html)
     # Wide tables (the use-case catalog) need their own scrollbar.
     html = html.replace("<table>", '<div class="table-wrap"><table>')
     html = html.replace("</table>", "</table></div>")
@@ -125,10 +135,33 @@ CSS = """
   --hairline: #e7e7e7;
   --code-bg: #f5f5f5;
   --link: #1f5f93;
+  --panel: #fafafa;
+  --quote-text: #3d3d3d;
+  --nav-text: #3c3c3c;
+  --nav-label: #767676;
   --sidebar-w: 252px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151515;
+    --text: #e6e6e6;
+    --muted: #a0a0a0;
+    --faint: #828282;
+    --hairline: #2c2c2c;
+    --code-bg: #222222;
+    --link: #84aede;
+    --panel: #1d1d1d;
+    --quote-text: #c4c4c4;
+    --nav-text: #cfcfcf;
+    --nav-label: #8e8e8e;
+    color-scheme: dark;
+  }
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
+:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+[id] { scroll-margin-top: 24px; }
 body {
   margin: 0;
   background: var(--bg);
@@ -157,7 +190,7 @@ nav .site-title {
 }
 nav .site-sub {
   font-size: 12px;
-  color: #767676;
+  color: var(--nav-label);
   margin: 0 0 28px;
 }
 nav .section {
@@ -165,18 +198,21 @@ nav .section {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.09em;
-  color: #767676;
+  color: var(--nav-label);
   margin: 26px 0 8px;
 }
 nav a.page {
   display: block;
-  padding: 4px 0;
+  padding: 4px 0 4px 10px;
+  margin-left: -12px;
+  border-left: 2px solid transparent;
   font-size: 13.5px;
-  color: #3c3c3c;
+  color: var(--nav-text);
   text-decoration: none;
+  transition: color 0.12s ease;
 }
 nav a.page:hover { color: var(--text); }
-nav a.page.active { color: var(--text); font-weight: 600; }
+nav a.page.active { color: var(--text); font-weight: 600; border-left-color: var(--text); }
 
 /* ---- content ---- */
 main {
@@ -210,16 +246,41 @@ li { margin: 4px 0; }
 li > ul, li > ol { margin-bottom: 0; }
 hr { border: 0; border-top: 1px solid var(--hairline); margin: 36px 0; }
 
-a { color: var(--link); text-decoration: underline; text-decoration-color: rgba(31, 95, 147, 0.3); text-underline-offset: 2.5px; }
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--link) 30%, transparent);
+  text-underline-offset: 2.5px;
+  transition: text-decoration-color 0.12s ease;
+}
 a:hover { text-decoration-color: currentColor; }
 
 blockquote {
   margin: 0 0 18px;
   padding: 2px 0 2px 18px;
   border-left: 2px solid var(--text);
-  color: #3d3d3d;
+  color: var(--quote-text);
 }
 blockquote p:last-child { margin-bottom: 0; }
+/* The "In plain words" opener every page leads with. */
+h1 + blockquote {
+  background: var(--panel);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin-bottom: 28px;
+}
+
+.hanchor {
+  margin-left: 8px;
+  color: var(--faint);
+  font-weight: 400;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+h2:hover .hanchor, h3:hover .hanchor, .hanchor:focus-visible { opacity: 1; }
+.hanchor:hover { color: var(--link); }
 
 code, kbd {
   font-family: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
@@ -236,7 +297,7 @@ pre {
 }
 pre code { background: none; padding: 0; font-size: 13px; }
 kbd {
-  background: #fafafa;
+  background: var(--panel);
   border: 1px solid var(--hairline);
   border-bottom-width: 2px;
   border-radius: 4px;
@@ -245,8 +306,13 @@ kbd {
 }
 
 .table-wrap { overflow-x: auto; margin: 0 0 18px; }
-table { border-collapse: collapse; width: 100%; font-size: 13.5px; line-height: 1.5; }
+.table-wrap.fits { overflow: visible; }
+table { border-collapse: separate; border-spacing: 0; width: 100%; font-size: 13.5px; line-height: 1.5; }
 th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--bg);
   text-align: left;
   font-size: 11px;
   font-weight: 600;
@@ -254,13 +320,14 @@ th {
   letter-spacing: 0.07em;
   color: var(--muted);
   padding: 8px 14px 8px 0;
-  border-bottom: 1px solid var(--text);
+  box-shadow: inset 0 -1px 0 var(--text);
 }
 td {
   vertical-align: top;
   padding: 9px 14px 9px 0;
   border-bottom: 1px solid var(--hairline);
 }
+tbody tr:hover td { background: var(--panel); }
 
 .pager {
   display: flex;
@@ -330,6 +397,11 @@ function route() {
   const active = document.querySelector('nav a.page.active');
   document.title = (active && slug !== 'home' ? active.textContent + ' · ' : '') + SITE_TITLE;
   document.body.classList.remove('nav-open');
+  // Tables that fit their column lose the scroll wrapper so sticky headers work.
+  document.querySelectorAll('main > section.active .table-wrap:not([data-measured])').forEach(w => {
+    w.dataset.measured = '1';
+    if (w.scrollWidth <= w.clientWidth) w.classList.add('fits');
+  });
   if (anchor) {
     const el = document.getElementById(slug + '--' + anchor);
     if (el) { el.scrollIntoView(); return; }
@@ -383,6 +455,7 @@ def build():
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>{SITE_TITLE}</title>
 <style>{CSS}</style>
 </head>
