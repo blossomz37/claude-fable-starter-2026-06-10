@@ -272,6 +272,32 @@ footer.colophon {
   }
   .toc a:hover { color: var(--text); }
   .toc a.active { color: var(--text); border-left-color: var(--link); }
+  /* A-Z index strip (glossary-style pages) */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 26px);
+    gap: 2px;
+  }
+  .toc.toc-index .toc-grid a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .toc.toc-index .toc-grid a:hover { color: var(--text); border-color: var(--hairline); }
+  .toc.toc-index .toc-grid a.active {
+    color: var(--link);
+    border-color: var(--hairline);
+    background: var(--panel);
+  }
 }
 
 .to-top {
@@ -846,7 +872,7 @@ flag any chapter that ends without a hook.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="glossary">
-<aside class="toc"><div class="toc-label">On this page</div><a href="#glossary/symbols">Symbols</a><a href="#glossary/a">A</a><a href="#glossary/b">B</a><a href="#glossary/c">C</a><a href="#glossary/d">D</a><a href="#glossary/e">E</a><a href="#glossary/f">F</a><a href="#glossary/g">G</a><a href="#glossary/h">H</a><a href="#glossary/i">I</a><a href="#glossary/j">J</a><a href="#glossary/k">K</a><a href="#glossary/m">M</a><a href="#glossary/n">N</a><a href="#glossary/o">O</a><a href="#glossary/p">P</a><a href="#glossary/r">R</a><a href="#glossary/s">S</a><a href="#glossary/t">T</a><a href="#glossary/u">U</a><a href="#glossary/v">V</a><a href="#glossary/w">W</a><a href="#glossary/y">Y</a><a href="#glossary/sources">Sources</a></aside>
+<aside class="toc toc-index"><div class="toc-label">Jump to</div><div class="toc-grid"><a href="#glossary/symbols" title="Symbols">#</a><a href="#glossary/a" title="A">A</a><a href="#glossary/b" title="B">B</a><a href="#glossary/c" title="C">C</a><a href="#glossary/d" title="D">D</a><a href="#glossary/e" title="E">E</a><a href="#glossary/f" title="F">F</a><a href="#glossary/g" title="G">G</a><a href="#glossary/h" title="H">H</a><a href="#glossary/i" title="I">I</a><a href="#glossary/j" title="J">J</a><a href="#glossary/k" title="K">K</a><a href="#glossary/m" title="M">M</a><a href="#glossary/n" title="N">N</a><a href="#glossary/o" title="O">O</a><a href="#glossary/p" title="P">P</a><a href="#glossary/r" title="R">R</a><a href="#glossary/s" title="S">S</a><a href="#glossary/t" title="T">T</a><a href="#glossary/u" title="U">U</a><a href="#glossary/v" title="V">V</a><a href="#glossary/w" title="W">W</a><a href="#glossary/y" title="Y">Y</a><a href="#glossary/sources" title="Sources">#</a></div></aside>
 <h1 id="glossary--glossary-every-technical-term-in-this-wiki-in-plain-language">Glossary: Every Technical Term in This Wiki, in Plain Language</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Every technical term used anywhere in this wiki, defined for an author who has never opened a terminal. Each entry says what the thing is in 1–3 sentences, often with an author-world analogy, and links to the wiki page that covers it in depth. Skim it once now; come back whenever a doc uses a word you don't recognize.</p>

@@ -397,6 +397,32 @@ footer.colophon {
   }
   .toc a:hover { color: var(--text); }
   .toc a.active { color: var(--text); border-left-color: var(--link); }
+  /* A-Z index strip (glossary-style pages) */
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 26px);
+    gap: 2px;
+  }
+  .toc.toc-index .toc-grid a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .toc.toc-index .toc-grid a:hover { color: var(--text); border-color: var(--hairline); }
+  .toc.toc-index .toc-grid a.active {
+    color: var(--link);
+    border-color: var(--hairline);
+    background: var(--panel);
+  }
 }
 
 .to-top {
@@ -540,9 +566,20 @@ def build():
             _, nslug, ntitle = PAGES[i + 1]
             pager.append(f'<a class="next" href="#{nslug}"><span class="label">Next</span><span class="pager-title">{ntitle}</span></a>')
         toc_html = ""
-        if len(tocs[slug]) >= 3:
-            items = "".join(f'<a href="#{slug}/{frag}">{text}</a>' for frag, text in tocs[slug])
-            toc_html = f'<aside class="toc"><div class="toc-label">On this page</div>{items}</aside>\n'
+        entries = tocs[slug]
+        if len(entries) >= 3:
+            # Mostly single-letter headings (the glossary) render as an A-Z
+            # index strip instead of a stacked list.
+            is_index = sum(1 for _, t in entries if len(t) <= 2) >= len(entries) * 0.6
+            if is_index:
+                items = "".join(
+                    f'<a href="#{slug}/{frag}" title="{text}">{text if len(text) <= 2 else "#"}</a>'
+                    for frag, text in entries)
+                toc_html = (f'<aside class="toc toc-index"><div class="toc-label">Jump to</div>'
+                            f'<div class="toc-grid">{items}</div></aside>\n')
+            else:
+                items = "".join(f'<a href="#{slug}/{frag}">{text}</a>' for frag, text in entries)
+                toc_html = f'<aside class="toc"><div class="toc-label">On this page</div>{items}</aside>\n'
         body.append(
             f'<section data-page="{slug}">\n{toc_html}{sections_html[slug]}\n'
             f'<div class="pager">{"".join(pager)}</div>\n'
