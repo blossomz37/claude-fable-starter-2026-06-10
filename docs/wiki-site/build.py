@@ -94,6 +94,10 @@ def rewrite_page(html: str, page_rel: str, slug: str) -> str:
 
     html = re.sub(r'href="([^"]+)"', fix_href, html)
 
+    # Collect h2s for the on-page TOC before anchor markup is injected.
+    toc = [(hid.split("--", 1)[1], re.sub(r"<[^>]+>", "", inner))
+           for hid, inner in re.findall(r'<h2 id="([^"]+)">(.*?)</h2>', html)]
+
     # Hover-revealed anchor links on h2/h3 for shareable deep links.
     def add_anchor(m):
         level, hid, inner = m.groups()
@@ -106,7 +110,7 @@ def rewrite_page(html: str, page_rel: str, slug: str) -> str:
     # Wide tables (the use-case catalog) need their own scrollbar.
     html = html.replace("<table>", '<div class="table-wrap"><table>')
     html = html.replace("</table>", "</table></div>")
-    return html
+    return html, toc
 
 
 def validate(sections_html: dict):
@@ -355,6 +359,62 @@ footer.colophon {
   color: var(--faint);
 }
 
+/* ---- on-page TOC (wide screens only) ---- */
+.toc { display: none; }
+@media (min-width: 1280px) {
+  .toc {
+    display: block;
+    position: fixed;
+    top: 56px;
+    right: 28px;
+    width: 204px;
+    max-height: calc(100vh - 112px);
+    overflow-y: auto;
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--nav-label);
+    margin-bottom: 8px;
+  }
+  .toc a {
+    display: block;
+    padding: 3px 0 3px 10px;
+    margin-left: -12px;
+    border-left: 2px solid transparent;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.12s ease;
+  }
+  .toc a:hover { color: var(--text); }
+  .toc a.active { color: var(--text); border-left-color: var(--link); }
+}
+
+.to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 2;
+  padding: 7px 12px;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+.to-top.show { opacity: 1; pointer-events: auto; }
+.to-top:hover { color: var(--text); }
+
 /* ---- small screens ---- */
 .menu-toggle { display: none; }
 @media (max-width: 880px) {
@@ -410,10 +470,35 @@ function route() {
   });
   if (anchor) {
     const el = document.getElementById(slug + '--' + anchor);
-    if (el) { el.scrollIntoView(); return; }
+    if (el) { el.scrollIntoView(); spy(); return; }
   }
   window.scrollTo(0, 0);
+  spy();
 }
+
+const toTop = document.querySelector('.to-top');
+function spy() {
+  const sec = document.querySelector('main > section.active');
+  if (!sec) return;
+  let cur = null;
+  sec.querySelectorAll('h2[id]').forEach(h => {
+    if (h.getBoundingClientRect().top <= 96) cur = h;
+  });
+  const curHash = cur ? '#' + cur.id.replace('--', '/') : null;
+  sec.querySelectorAll('.toc a').forEach(a =>
+    a.classList.toggle('active', a.getAttribute('href') === curHash));
+  toTop.classList.toggle('show', window.scrollY > window.innerHeight * 1.5);
+}
+let rafPending = false;
+window.addEventListener('scroll', () => {
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => { rafPending = false; spy(); });
+}, { passive: true });
+toTop.addEventListener('click', () => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+});
 
 window.addEventListener('hashchange', route);
 document.querySelector('.menu-toggle').addEventListener('click', () => {
@@ -425,8 +510,9 @@ route();
 
 def build():
     sections_html = {}
+    tocs = {}
     for path, slug, _ in PAGES:
-        sections_html[slug] = rewrite_page(pandoc(WIKI / path), path, slug)
+        sections_html[slug], tocs[slug] = rewrite_page(pandoc(WIKI / path), path, slug)
 
     validate(sections_html)
 
@@ -449,8 +535,12 @@ def build():
         if i < len(PAGES) - 1:
             _, nslug, ntitle = PAGES[i + 1]
             pager.append(f'<a class="next" href="#{nslug}"><span class="label">Next</span><span class="pager-title">{ntitle}</span></a>')
+        toc_html = ""
+        if len(tocs[slug]) >= 3:
+            items = "".join(f'<a href="#{slug}/{frag}">{text}</a>' for frag, text in tocs[slug])
+            toc_html = f'<aside class="toc"><div class="toc-label">On this page</div>{items}</aside>\n'
         body.append(
-            f'<section data-page="{slug}">\n{sections_html[slug]}\n'
+            f'<section data-page="{slug}">\n{toc_html}{sections_html[slug]}\n'
             f'<div class="pager">{"".join(pager)}</div>\n'
             '<footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>\n'
             '</section>'
@@ -473,6 +563,7 @@ def build():
 <main>
 {chr(10).join(body)}
 </main>
+<button class="to-top" aria-label="Back to top">&#8593; Top</button>
 <script>const SITE_TITLE = {SITE_TITLE!r};{JS}</script>
 </body>
 </html>

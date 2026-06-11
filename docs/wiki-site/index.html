@@ -234,6 +234,62 @@ footer.colophon {
   color: var(--faint);
 }
 
+/* ---- on-page TOC (wide screens only) ---- */
+.toc { display: none; }
+@media (min-width: 1280px) {
+  .toc {
+    display: block;
+    position: fixed;
+    top: 56px;
+    right: 28px;
+    width: 204px;
+    max-height: calc(100vh - 112px);
+    overflow-y: auto;
+  }
+  .toc-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--nav-label);
+    margin-bottom: 8px;
+  }
+  .toc a {
+    display: block;
+    padding: 3px 0 3px 10px;
+    margin-left: -12px;
+    border-left: 2px solid transparent;
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.12s ease;
+  }
+  .toc a:hover { color: var(--text); }
+  .toc a.active { color: var(--text); border-left-color: var(--link); }
+}
+
+.to-top {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 2;
+  padding: 7px 12px;
+  background: var(--bg);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--muted);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.12s ease, color 0.12s ease;
+}
+.to-top.show { opacity: 1; pointer-events: auto; }
+.to-top:hover { color: var(--text); }
+
 /* ---- small screens ---- */
 .menu-toggle { display: none; }
 @media (max-width: 880px) {
@@ -296,6 +352,7 @@ footer.colophon {
 </nav>
 <main>
 <section data-page="home">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#home/the-suggested-learning-path">The suggested learning path</a><a href="#home/map-of-contents">Map of contents</a><a href="#home/how-this-wiki-was-built">How this wiki was built</a></aside>
 <h1 id="home--the-claude-fable-starter-kit-wiki">The Claude Fable Starter Kit Wiki</h1>
 <blockquote>
 <p><strong>In plain words:</strong> This wiki takes a fiction author from "never opened a terminal" to running multi-agent revision pipelines with Claude Fable 5. Every page has a plain-language top half and an <strong>Advanced</strong> section at the bottom — read to the depth you need and stop. Every platform claim was verified against official Anthropic documentation (as of 2026-06-10); anything we could not verify is marked ⚠️.</p>
@@ -353,6 +410,7 @@ footer.colophon {
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="which-tool-when">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#which-tool-when/what-it-is">What it is</a><a href="#which-tool-when/why-authors-care">Why authors care</a><a href="#which-tool-when/getting-started">Getting started</a><a href="#which-tool-when/author-use-cases">Author use cases</a><a href="#which-tool-when/common-pitfalls">Common pitfalls</a><a href="#which-tool-when/advanced">Advanced</a><a href="#which-tool-when/sources">Sources</a></aside>
 <h1 id="which-tool-when--which-claude-should-i-open-a-decision-guide-for-authors">Which Claude Should I Open? A Decision Guide for Authors</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude comes in four flavors — the website, the phone app, the Desktop app, and Claude Code. They share one account, one subscription, and mostly one brain. The difference is <em>what they can touch</em>: your manuscript files, your folders, your automations. This page tells you which door to walk through for each kind of author job.</p>
@@ -549,6 +607,7 @@ footer.colophon {
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="quick-start">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#quick-start/what-it-is">What it is</a><a href="#quick-start/why-authors-care">Why authors care</a><a href="#quick-start/getting-started">Getting started</a><a href="#quick-start/author-use-cases">Author use cases</a><a href="#quick-start/common-pitfalls">Common pitfalls</a><a href="#quick-start/advanced">Advanced</a><a href="#quick-start/sources">Sources</a></aside>
 <h1 id="quick-start--quick-start-your-first-30-minutes-with-claude-code">Quick Start: Your First 30 Minutes with Claude Code</h1>
 <blockquote>
 <p><strong>In plain words:</strong> This page takes you from "nothing installed" to "Claude just read my chapter and found a continuity error" in about half an hour. Along the way it sets up the one book-project folder layout that every other guide in this wiki builds on, so you never have to reorganize later.</p>
@@ -697,6 +756,7 @@ flag any chapter that ends without a hook.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="managing-usage-and-cost">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#managing-usage-and-cost/what-it-is">What it is</a><a href="#managing-usage-and-cost/why-authors-care">Why authors care</a><a href="#managing-usage-and-cost/getting-started">Getting started</a><a href="#managing-usage-and-cost/author-use-cases">Author use cases</a><a href="#managing-usage-and-cost/common-pitfalls">Common pitfalls</a><a href="#managing-usage-and-cost/advanced">Advanced</a><a href="#managing-usage-and-cost/advanced-api-users">Advanced: API users</a><a href="#managing-usage-and-cost/sources">Sources</a></aside>
 <h1 id="managing-usage-and-cost--managing-usage-and-cost-making-fable-5-last">Managing Usage and Cost (Making Fable 5 Last)</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Fable 5 is the most capable Claude model — and the most expensive (<span class="math inline">10/</span>50 per million tokens in/out). Long working sessions burn through usage limits surprisingly fast, and most of that burn is invisible: it's the conversation history being re-sent on every turn, not the words you see on screen. This page explains where the tokens actually go and gives you habits that cut usage substantially without dumbing down the model.</p>
@@ -782,6 +842,7 @@ flag any chapter that ends without a hook.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="glossary">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#glossary/symbols">Symbols</a><a href="#glossary/a">A</a><a href="#glossary/b">B</a><a href="#glossary/c">C</a><a href="#glossary/d">D</a><a href="#glossary/e">E</a><a href="#glossary/f">F</a><a href="#glossary/g">G</a><a href="#glossary/h">H</a><a href="#glossary/i">I</a><a href="#glossary/j">J</a><a href="#glossary/k">K</a><a href="#glossary/m">M</a><a href="#glossary/n">N</a><a href="#glossary/o">O</a><a href="#glossary/p">P</a><a href="#glossary/r">R</a><a href="#glossary/s">S</a><a href="#glossary/t">T</a><a href="#glossary/u">U</a><a href="#glossary/v">V</a><a href="#glossary/w">W</a><a href="#glossary/y">Y</a><a href="#glossary/sources">Sources</a></aside>
 <h1 id="glossary--glossary-every-technical-term-in-this-wiki-in-plain-language">Glossary: Every Technical Term in This Wiki, in Plain Language</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Every technical term used anywhere in this wiki, defined for an author who has never opened a terminal. Each entry says what the thing is in 1–3 sentences, often with an author-world analogy, and links to the wiki page that covers it in depth. Skim it once now; come back whenever a doc uses a word you don't recognize.</p>
@@ -934,6 +995,7 @@ flag any chapter that ends without a hook.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="installation-setup">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#installation-setup/what-it-is">What it is</a><a href="#installation-setup/why-authors-care">Why authors care</a><a href="#installation-setup/getting-started">Getting started</a><a href="#installation-setup/what-is-a-session">What is a "session"?</a><a href="#installation-setup/choosing-a-model">Choosing a model</a><a href="#installation-setup/author-use-cases">Author use cases</a><a href="#installation-setup/common-pitfalls">Common pitfalls</a><a href="#installation-setup/advanced">Advanced</a><a href="#installation-setup/sources">Sources</a></aside>
 <h1 id="installation-setup--installing-claude-code-and-starting-your-first-session">Installing Claude Code and Starting Your First Session</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude Code is an AI assistant that works directly with the files on your computer — your manuscript, your series bible, your blurbs — instead of making you copy-paste into a chat window. This guide gets it installed, logged in, and pointed at your book folder, even if you have never opened a terminal in your life.</p>
@@ -1094,6 +1156,7 @@ flag any chapter that ends without a hook.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="claude-md-and-memory">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#claude-md-and-memory/what-it-is">What it is</a><a href="#claude-md-and-memory/why-authors-care">Why authors care</a><a href="#claude-md-and-memory/getting-started">Getting started</a><a href="#claude-md-and-memory/where-memory-files-live">Where memory files live</a><a href="#claude-md-and-memory/author-use-cases">Author use cases</a><a href="#claude-md-and-memory/common-pitfalls">Common pitfalls</a><a href="#claude-md-and-memory/advanced">Advanced</a><a href="#claude-md-and-memory/sources">Sources</a></aside>
 <h1 id="claude-md-and-memory--claudemd-and-memory-teaching-claude-your-book">CLAUDE.md and Memory: Teaching Claude Your Book</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude starts every session with a blank slate — it does not remember yesterday's conversation. A <code>CLAUDE.md</code> file is a note you leave on its desk: your voice rules, series facts, and formatting preferences, read automatically at the start of every session. Claude also keeps its own notebook ("auto memory") of things it learns while working with you.</p>
@@ -1232,6 +1295,7 @@ flag any chapter that ends without a hook.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="settings-and-permissions">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#settings-and-permissions/what-it-is">What it is</a><a href="#settings-and-permissions/why-authors-care">Why authors care</a><a href="#settings-and-permissions/getting-started">Getting started</a><a href="#settings-and-permissions/a-safe-starter-setup-for-a-manuscript-folder">A safe starter setup for a manuscript folder</a><a href="#settings-and-permissions/author-use-cases">Author use cases</a><a href="#settings-and-permissions/common-pitfalls">Common pitfalls</a><a href="#settings-and-permissions/advanced">Advanced</a><a href="#settings-and-permissions/sources">Sources</a></aside>
 <h1 id="settings-and-permissions--settings-and-permissions-keeping-your-manuscript-safe">Settings and Permissions: Keeping Your Manuscript Safe</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude Code asks before it changes your files or runs commands — those pop-up questions are the permission system. You can tune it: let Claude read everything freely, make certain folders untouchable, and stop approving the same harmless action twenty times a day. Settings live in small text files you mostly never need to open by hand.</p>
@@ -1361,6 +1425,7 @@ originals/ and deny edits to series-bible.md. Allow reads of everything.</code><
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="slash-commands">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#slash-commands/what-it-is">What it is</a><a href="#slash-commands/why-authors-care">Why authors care</a><a href="#slash-commands/getting-started">Getting started</a><a href="#slash-commands/the-built-ins-most-useful-for-authors">The built-ins most useful for authors</a><a href="#slash-commands/custom-slash-commands-your-own-rituals">Custom slash commands (your own rituals)</a><a href="#slash-commands/common-pitfalls">Common pitfalls</a><a href="#slash-commands/advanced">Advanced</a><a href="#slash-commands/sources">Sources</a></aside>
 <h1 id="slash-commands--slash-commands-the-buttons-and-dials-of-claude-code">Slash Commands: The Buttons and Dials of Claude Code</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Type <code>/</code> in Claude Code and a menu of commands appears — switch models, clear the conversation, open settings, resume yesterday's session. Slash commands are how you operate the app itself, as opposed to talking to Claude. You only need about ten of them.</p>
@@ -1528,6 +1593,7 @@ originals/ and deny edits to series-bible.md. Allow reads of everything.</code><
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="skills">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#skills/what-it-is">What it is</a><a href="#skills/why-authors-care">Why authors care</a><a href="#skills/getting-started">Getting started</a><a href="#skills/author-use-cases">Author use cases</a><a href="#skills/common-pitfalls">Common pitfalls</a><a href="#skills/advanced">Advanced</a><a href="#skills/sources">Sources</a></aside>
 <h1 id="skills--skills-teach-claude-your-procedures-once">Skills: Teach Claude Your Procedures Once</h1>
 <blockquote>
 <p><strong>In plain words:</strong> A skill is a reusable instruction packet — a folder with a <code>SKILL.md</code> file inside — that Claude loads only when it's needed. Think of it as handing your assistant a laminated procedure card: "Here's exactly how I write blurbs." Write it once, and Claude follows it every time, in every project, without you re-pasting the instructions.</p>
@@ -1820,6 +1886,7 @@ originals/ and deny edits to series-bible.md. Allow reads of everything.</code><
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="subagents-and-orchestration">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#subagents-and-orchestration/what-it-is">What it is</a><a href="#subagents-and-orchestration/why-authors-care">Why authors care</a><a href="#subagents-and-orchestration/getting-started">Getting started</a><a href="#subagents-and-orchestration/built-in-agent-types">Built-in agent types</a><a href="#subagents-and-orchestration/custom-subagents--still-no-code-required">Custom subagents — still no code required</a><a href="#subagents-and-orchestration/author-use-cases">Author use cases</a><a href="#subagents-and-orchestration/background-and-long-running-work">Background and long-running work</a><a href="#subagents-and-orchestration/common-pitfalls">Common pitfalls</a><a href="#subagents-and-orchestration/advanced">Advanced</a><a href="#subagents-and-orchestration/sources">Sources</a></aside>
 <h1 id="subagents-and-orchestration--subagents-let-claude-delegate-work-to-copies-of-itself">Subagents: Let Claude Delegate Work to Copies of Itself</h1>
 <blockquote>
 <p><strong>In plain words:</strong> A subagent is a fresh copy of Claude that your main Claude session hands a task to — like a managing editor assigning chapters to different copyeditors. Each copy works in its own clean workspace, then reports back a summary. You can run several at once ("review these five chapters in parallel"), and you never have to write a single line of configuration to use them.</p>
@@ -2057,6 +2124,7 @@ series-bible.md and report back a short list of problems.</code></pre></li>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="hooks">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#hooks/what-it-is">What it is</a><a href="#hooks/why-authors-care">Why authors care</a><a href="#hooks/getting-started">Getting started</a><a href="#hooks/author-use-cases">Author use cases</a><a href="#hooks/common-pitfalls">Common pitfalls</a><a href="#hooks/advanced">Advanced</a><a href="#hooks/sources">Sources</a></aside>
 <h1 id="hooks--hooks-automatic-guardrails-for-your-writing-projects">Hooks: Automatic Guardrails for Your Writing Projects</h1>
 <blockquote>
 <p><strong>In plain words:</strong> A hook is a small rule that runs automatically at a fixed moment — for example, "every time Claude edits a file, make a backup copy first." Unlike instructions you put in CLAUDE.md (which Claude reads and <em>usually</em> follows), a hook is enforced by the Claude Code program itself, so it fires <strong>every single time</strong>, no exceptions. Think of it as a copyeditor who checks every page before it goes in the binder — without ever being asked.</p>
@@ -2414,6 +2482,7 @@ series-bible.md and report back a short list of problems.</code></pre></li>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="mcp">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#mcp/what-it-is">What it is</a><a href="#mcp/why-authors-care">Why authors care</a><a href="#mcp/getting-started">Getting started</a><a href="#mcp/author-use-cases">Author use cases</a><a href="#mcp/common-pitfalls">Common pitfalls</a><a href="#mcp/advanced">Advanced</a><a href="#mcp/sources">Sources</a></aside>
 <h1 id="mcp--mcp-connecting-claude-to-your-other-tools">MCP: Connecting Claude to Your Other Tools</h1>
 <blockquote>
 <p><strong>In plain words:</strong> MCP (Model Context Protocol) is a standard plug that lets Claude connect to your other tools and accounts — your Notion story bible, your Obsidian research vault, your Slack, your spreadsheets. Instead of copying and pasting between apps, you give Claude a key to specific rooms, and it can read from (and write to) them directly while you work.</p>
@@ -2627,6 +2696,7 @@ series-bible.md and report back a short list of problems.</code></pre></li>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="claude-desktop">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#claude-desktop/what-it-is">What it is</a><a href="#claude-desktop/why-authors-care">Why authors care</a><a href="#claude-desktop/getting-started">Getting started</a><a href="#claude-desktop/author-use-cases">Author use cases</a><a href="#claude-desktop/common-pitfalls">Common pitfalls</a><a href="#claude-desktop/advanced">Advanced</a><a href="#claude-desktop/sources">Sources</a></aside>
 <h1 id="claude-desktop--claude-desktop-the-app-that-works-in-your-folders">Claude Desktop: The App That Works in Your Folders</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude Desktop is the Claude app you install on your Mac or Windows PC. It does everything the claude.ai website does, plus things a website can't: it can open your actual manuscript folders, rename and organize your files, run long jobs while you make coffee, and even run Claude Code in a friendly point-and-click window — no terminal required.</p>
@@ -2851,6 +2921,7 @@ series-bible.md and report back a short list of problems.</code></pre></li>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="drafting-and-revision">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#drafting-and-revision/what-it-is">What it is</a><a href="#drafting-and-revision/why-authors-care">Why authors care</a><a href="#drafting-and-revision/getting-started">Getting started</a><a href="#drafting-and-revision/story-bibles-as-ai-facing-dossiers">Story bibles as AI-facing dossiers</a><a href="#drafting-and-revision/the-chapter-production-loop">The chapter production loop</a><a href="#drafting-and-revision/author-use-cases">Author use cases</a><a href="#drafting-and-revision/common-pitfalls">Common pitfalls</a><a href="#drafting-and-revision/advanced">Advanced</a><a href="#drafting-and-revision/sources">Sources</a></aside>
 <h1 id="drafting-and-revision--drafting-and-revision-running-a-novel-through-claude-code">Drafting and Revision: Running a Novel Through Claude Code</h1>
 <blockquote>
 <p><strong>In plain words:</strong> This is the deep-dive on using Claude Code with Fable 5 to draft and revise a novel — not "AI, write my book," but a repeatable production loop where Claude drafts from <em>your</em> story bible, audits its own output, and you stay the author of record. Everything here builds on plain folders and text files; the feature docs explain each tool, this page wires them into a workflow.</p>
@@ -3080,6 +3151,7 @@ Never write into chapters/ — I promote drafts myself.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="research-and-worldbuilding">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#research-and-worldbuilding/what-it-is">What it is</a><a href="#research-and-worldbuilding/why-authors-care">Why authors care</a><a href="#research-and-worldbuilding/getting-started">Getting started</a><a href="#research-and-worldbuilding/author-use-cases">Author use cases</a><a href="#research-and-worldbuilding/common-pitfalls">Common pitfalls</a><a href="#research-and-worldbuilding/advanced">Advanced</a><a href="#research-and-worldbuilding/sources">Sources</a></aside>
 <h1 id="research-and-worldbuilding--research--worldbuilding-from-market-maps-to-world-bibles">Research &amp; Worldbuilding: From Market Maps to World Bibles</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude can do the research legwork that surrounds a book — figuring out what readers of your subgenre expect, studying comparable titles, digging up period detail, and keeping a living world bible and timeline as you draft. This doc shows the workflows, with prompts you can copy. One rule runs through all of it: Claude's research is a <em>draft of the truth</em> until you verify it — treat findings like notes from an enthusiastic intern, not like canon.</p>
@@ -3283,6 +3355,7 @@ Nothing from this report enters world/ — that promotion is mine.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="publishing-ops">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#publishing-ops/what-it-is">What it is</a><a href="#publishing-ops/why-authors-care">Why authors care</a><a href="#publishing-ops/getting-started">Getting started</a><a href="#publishing-ops/author-use-cases">Author use cases</a><a href="#publishing-ops/common-pitfalls">Common pitfalls</a><a href="#publishing-ops/advanced">Advanced</a><a href="#publishing-ops/sources">Sources</a></aside>
 <h1 id="publishing-ops--publishing-ops-from-finished-draft-to-retailer-ready-files">Publishing Ops: From Finished Draft to Retailer-Ready Files</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Once the book is written, a second job begins: converting files, formatting interiors, writing metadata, checking print specs, and keeping ten books' worth of back matter in sync. Claude is very good at this unglamorous production work — it can write and run the conversion scripts, sweep for stray straight quotes, build your ISBN spreadsheet, and remember the checklist so you don't have to. This doc shows how, safely.</p>
@@ -3453,6 +3526,7 @@ throughout. Report everything you changed.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="marketing-and-launch">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#marketing-and-launch/what-it-is">What it is</a><a href="#marketing-and-launch/why-authors-care">Why authors care</a><a href="#marketing-and-launch/getting-started">Getting started</a><a href="#marketing-and-launch/author-use-cases">Author use cases</a><a href="#marketing-and-launch/common-pitfalls">Common pitfalls</a><a href="#marketing-and-launch/advanced">Advanced</a><a href="#marketing-and-launch/sources">Sources</a></aside>
 <h1 id="marketing-and-launch--marketing--launch-from-manuscript-to-megaphone">Marketing &amp; Launch: From Manuscript to Megaphone</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Claude can turn the book you already wrote into the marketing you haven't written yet — blurbs, ads, emails, social posts, launch checklists. The trick is order of operations: extract the raw material <em>from the manuscript first</em>, keep it in one "marketing bible" file, and generate every channel's copy from that single source. This doc shows the whole pipeline, with prompts you can copy today.</p>
@@ -3628,6 +3702,7 @@ m8 series          → box-set copy, reading orders, cross-book hooks
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="adopting-and-sharing-tools">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#adopting-and-sharing-tools/what-it-is">What it is</a><a href="#adopting-and-sharing-tools/why-authors-care">Why authors care</a><a href="#adopting-and-sharing-tools/getting-started">Getting started</a><a href="#adopting-and-sharing-tools/the-three-phase-adoption-method">The three-phase adoption method</a><a href="#adopting-and-sharing-tools/sharing-it-back-scrub-before-reshare">Sharing it back: scrub before reshare</a><a href="#adopting-and-sharing-tools/the-decision-ladder-prompt--skill--script--mcp--app">The decision ladder: prompt → skill → script → MCP → app</a><a href="#adopting-and-sharing-tools/author-use-cases">Author use cases</a><a href="#adopting-and-sharing-tools/common-pitfalls">Common pitfalls</a><a href="#adopting-and-sharing-tools/advanced">Advanced</a><a href="#adopting-and-sharing-tools/sources">Sources</a></aside>
 <h1 id="adopting-and-sharing-tools--adopting-sharing-and-building-author-tools">Adopting, Sharing, and Building Author Tools</h1>
 <blockquote>
 <p><strong>In plain words:</strong> Authors increasingly swap tools with each other — a chapter-audit skill, a blurb pipeline, a series-bible script. This page covers the full loop: how to safely <em>adopt</em> a tool another author built (without inheriting their pen name and folder layout), how to <em>share</em> yours back without leaking personal data, and a simple ladder for deciding what an idea of your own should <em>become</em> — a prompt, a skill, a script, an MCP server, or a small app.</p>
@@ -3823,6 +3898,7 @@ with a dated entry for this merge.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 <section data-page="use-case-catalog">
+<aside class="toc"><div class="toc-label">On this page</div><a href="#use-case-catalog/how-to-read-this-catalog">How to read this catalog</a><a href="#use-case-catalog/1-planning--worldbuilding">1. Planning &amp; Worldbuilding</a><a href="#use-case-catalog/2-drafting">2. Drafting</a><a href="#use-case-catalog/3-revision--qa">3. Revision &amp; QA</a><a href="#use-case-catalog/4-continuity--series-management">4. Continuity &amp; Series Management</a><a href="#use-case-catalog/5-publishing--formatting">5. Publishing &amp; Formatting</a><a href="#use-case-catalog/6-marketing--launch">6. Marketing &amp; Launch</a><a href="#use-case-catalog/7-research">7. Research</a><a href="#use-case-catalog/8-author-business--admin">8. Author Business &amp; Admin</a><a href="#use-case-catalog/9-teaching--community">9. Teaching &amp; Community</a><a href="#use-case-catalog/10-multimedia-audio--image-generation">10. Multimedia: Audio &amp; Image Generation</a><a href="#use-case-catalog/where-to-start">Where to start</a><a href="#use-case-catalog/sources">Sources</a></aside>
 <h1 id="use-case-catalog--use-case-catalog-everything-an-indie-author-can-do-with-claude">Use-Case Catalog: Everything an Indie Author Can Do with Claude</h1>
 <blockquote>
 <p><strong>In plain words:</strong> This is the master menu. Every entry below is a real, achievable job — drafting, revising, publishing, marketing, running the business — matched to the <em>surface</em> where it works best (which Claude you open) and the <em>mechanism</em> that makes it repeatable (a one-off prompt, a saved skill, an automatic hook, and so on). Skim your category, find the row that sounds like your Tuesday, and follow the links to the how-to.</p>
@@ -4717,6 +4793,7 @@ with a dated entry for this merge.</code></pre>
 <footer class="colophon">Generated from docs/wiki · verified against official Anthropic docs 2026-06-10</footer>
 </section>
 </main>
+<button class="to-top" aria-label="Back to top">&#8593; Top</button>
 <script>const SITE_TITLE = 'The Claude Fable Starter Kit Wiki';
 const sections = document.querySelectorAll('main > section');
 const navLinks = document.querySelectorAll('nav a.page');
@@ -4742,10 +4819,35 @@ function route() {
   });
   if (anchor) {
     const el = document.getElementById(slug + '--' + anchor);
-    if (el) { el.scrollIntoView(); return; }
+    if (el) { el.scrollIntoView(); spy(); return; }
   }
   window.scrollTo(0, 0);
+  spy();
 }
+
+const toTop = document.querySelector('.to-top');
+function spy() {
+  const sec = document.querySelector('main > section.active');
+  if (!sec) return;
+  let cur = null;
+  sec.querySelectorAll('h2[id]').forEach(h => {
+    if (h.getBoundingClientRect().top <= 96) cur = h;
+  });
+  const curHash = cur ? '#' + cur.id.replace('--', '/') : null;
+  sec.querySelectorAll('.toc a').forEach(a =>
+    a.classList.toggle('active', a.getAttribute('href') === curHash));
+  toTop.classList.toggle('show', window.scrollY > window.innerHeight * 1.5);
+}
+let rafPending = false;
+window.addEventListener('scroll', () => {
+  if (rafPending) return;
+  rafPending = true;
+  requestAnimationFrame(() => { rafPending = false; spy(); });
+}, { passive: true });
+toTop.addEventListener('click', () => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+});
 
 window.addEventListener('hashchange', route);
 document.querySelector('.menu-toggle').addEventListener('click', () => {
