@@ -359,18 +359,19 @@ footer.colophon {
   color: var(--faint);
 }
 
-/* ---- on-page TOC (wide screens only) ----
+/* ---- on-page TOC ----
    Breakpoint is em-based and main reserves right padding so the fixed
-   rail can never sit over the text column, whatever the root font size. */
+   rail can never sit over the text column, whatever the root font size.
+   The text column flexes narrower before the rail gives up its spot. */
 .toc { display: none; }
-@media (min-width: 80em) {
-  main { padding-right: 268px; }
+@media (min-width: 64em) {
+  main { padding-right: 244px; }
   .toc {
     display: block;
     position: fixed;
     top: 56px;
-    right: 28px;
-    width: 204px;
+    right: 24px;
+    width: 192px;
     max-height: calc(100vh - 112px);
     overflow-y: auto;
   }
